@@ -13,10 +13,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginView extends JPanel {
-	Font myFont;
+	Font myFont, greetingFont;
 	
 	public LoginView() {
-		myFont = new Font("Arial", Font.PLAIN, 14);
+		myFont = new Font("Georgia", Font.PLAIN, 14);
+		greetingFont = new Font("Georgia", Font.ITALIC, 23);
 		setLayout(null);
 		
 		initializeComponents();
@@ -46,7 +47,7 @@ public class LoginView extends JPanel {
 	
 	private void createFormulary() {
 		JLabel lblGreeting = new JLabel("Welcome!");
-		lblGreeting.setFont(myFont);
+		lblGreeting.setFont(greetingFont);
 		lblGreeting.setBounds(10, 0, 200, 40);
 		add(lblGreeting);
 		
