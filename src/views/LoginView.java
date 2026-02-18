@@ -41,7 +41,7 @@ public class LoginView extends JPanel {
 	private void createLogo() {
 		JLabel lblLogo = new JLabel();
 		lblLogo.setBounds(145, 50, 100, 100);
-		lblLogo.setIcon(loadIcon("/img/icon.jpg", 100, 100));
+		lblLogo.setIcon(loadIcon("/img/appleLogo.jpg", 100, 100));
 		add(lblLogo);
 	}
 	

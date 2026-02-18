@@ -18,7 +18,7 @@ public class LoginWindow extends JFrame {
 		setLocationRelativeTo(null);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image icon = tk.getImage("src/img/icon.jpg");
+		Image icon = tk.getImage("src/img/appleLogo.jpg");
 		setIconImage(icon);
 		
 		/*
@@ -27,8 +27,13 @@ public class LoginWindow extends JFrame {
 		setCursor(myCursor);
 		*/
 		
-		LoginView littlePanel = new LoginView();
-		add(littlePanel);
+		//LoginView littlePanel = new LoginView();
+		//add(littlePanel);
+		
+		BorderPanel borderLayout = new BorderPanel();
+		add(borderLayout);
+		
+		
 		
 		setVisible(true);
 	}
