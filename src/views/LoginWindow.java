@@ -1,40 +1,20 @@
 package views;
 
-import java.awt.Cursor;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.*;
+import java.awt.*;
 
 public class LoginWindow extends JFrame {
 	public LoginWindow() {
-		setSize(400, 400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLocation(100, 100);
+		setTitle("ONLINE STORE");
+		setSize(450, 330);
 		setResizable(false);
-		setTitle("Online Store v1");
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		Toolkit tk = Toolkit.getDefaultToolkit();
-		Image icon = tk.getImage("src/img/appleLogo.jpg");
-		setIconImage(icon);
+		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
+		setIconImage(icon.getImage());
 		
-		/*
-		ImageIcon cursorImage = new ImageIcon("src/img/icon.jpg");
-		Cursor myCursor = tk.createCustomCursor(cursorImage.getImage(), new Point(0, 0), "Cursor");
-		setCursor(myCursor);
-		*/
-		
-		//LoginView littlePanel = new LoginView();
-		//add(littlePanel);
-		
-		BorderPanel borderLayout = new BorderPanel();
-		add(borderLayout);
-		
-		
-		
+		add(new LoginView());
 		setVisible(true);
 	}
 }

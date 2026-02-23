@@ -1,95 +1,75 @@
 package views;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
+import components.RoundButton;
 
 public class LoginView extends JPanel {
-	Font myFont, greetingFont;
-	
 	public LoginView() {
-		myFont = new Font("Georgia", Font.PLAIN, 14);
-		greetingFont = new Font("Georgia", Font.ITALIC, 23);
-		setLayout(null);
-		
-		initializeComponents();
+		setLayout(new BorderLayout(10, 10));
+		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		createNorth();
+		createCenter();
+		createSouth();
 	}
 	
-	private void initializeComponents() {
-		createButtons();
-		createLogo();
-		createFormulary();
+	private void createNorth() {
+		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+		
+		ImageIcon icon = new ImageIcon("src/img/icon.jpg");
+		Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+		
+		JLabel lblLogo = new JLabel(scaledIcon);
+		
+		JLabel lblWelcome = new JLabel("WELCOME!");
+		lblWelcome.setFont(new Font("Georgia", Font.BOLD, 26));
+		
+		panelNorth.add(lblLogo);
+		panelNorth.add(lblWelcome);
+		
+		add(panelNorth, BorderLayout.NORTH);
 	}
 	
-	private void createButtons() {
-		JButton button = new JButton("Log in!");
-		button.setBounds(250, 320, 120, 30);
-		button.setToolTipText("Click here to enter.");
-		button.setFont(myFont);
-		button.setBackground(Color.GREEN);
-		add(button);
-	}
-	
-	private void createLogo() {
-		JLabel lblLogo = new JLabel();
-		lblLogo.setBounds(145, 50, 100, 100);
-		lblLogo.setIcon(loadIcon("/img/appleLogo.jpg", 100, 100));
-		add(lblLogo);
-	}
-	
-	private void createFormulary() {
-		JLabel lblGreeting = new JLabel("Welcome!");
-		lblGreeting.setFont(greetingFont);
-		lblGreeting.setBounds(10, 0, 200, 40);
-		add(lblGreeting);
+	private void createCenter() {
+		JPanel panelCenter = new JPanel();
+		panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.Y_AXIS));
 		
-		int lblX = 10, y = 170, txtX = 150;
-		
-		JLabel lblEmail = new JLabel("Email: ");
-		lblEmail.setFont(myFont);
-		lblEmail.setBounds(lblX, y, 200, 40);
-		add(lblEmail);
-		
+		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setFont(new Font("Georgia", Font.BOLD, 14));
 		JTextField txtEmail = new JTextField();
-		txtEmail.setFont(myFont);
-		txtEmail.setBounds(txtX, y, 200, 40);
-		add(txtEmail);
+		JLabel lblEmailError = new JLabel("Please enter your E-mail.");
+		lblEmailError.setForeground(Color.RED);
+		lblEmailError.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
-		JLabel lblEmailRequired = new JLabel("The email is required.");
-		lblEmailRequired.setBounds(txtX, y+35, 200, 30);
-		lblEmailRequired.setFont(new Font("Arial", Font.BOLD, 10));
-		lblEmailRequired.setForeground(Color.RED);
-		add(lblEmailRequired);
+		panelCenter.add(lblEmail);
+		panelCenter.add(txtEmail);
+		panelCenter.add(lblEmailError);
 		
-		y += 70;
+		panelCenter.add(Box.createVerticalStrut(15));
 		
-		JLabel lblPassword = new JLabel("Password: ");
-		lblPassword.setFont(myFont);
-		lblPassword.setBounds(lblX, y, 200, 40);
-		add(lblPassword);
+		JLabel lblPassword = new JLabel("Passphrase:");
+		lblPassword.setFont(new Font("Georgia", Font.BOLD, 14));
+		JPasswordField txtPassword = new JPasswordField();
+		JLabel lblPasswordError = new JLabel("Enter your passphrase");
+		lblPasswordError.setForeground(Color.RED);
+		lblPasswordError.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
-		JPasswordField password = new JPasswordField();
-		password.setFont(myFont);
-		password.setBounds(txtX, y, 200, 40);
-		add(password);
+		panelCenter.add(lblPassword);
+		panelCenter.add(txtPassword);
+		panelCenter.add(lblPasswordError);
+		
+		add(panelCenter, BorderLayout.CENTER);
 	}
 	
-	private ImageIcon loadIcon(String route, int w, int h) {
-		try {
-			Image icon = ImageIO.read(getClass().getResource(route));
-			icon = icon.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-			return new ImageIcon(icon);
-		} catch (Exception ex) {
-			System.out.println("Icon image not found.");
-		}
-		return null;
+	private void createSouth() {
+		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		RoundButton loginBtn = new RoundButton("Login");
+		loginBtn.setForeground(Color.BLACK);
+		loginBtn.setBackground(Color.GREEN);
+		
+		panelSouth.add(loginBtn);
+		
+		add(panelSouth, BorderLayout.SOUTH);
 	}
 }
