@@ -1,7 +1,11 @@
 package views;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 import components.RoundButton;
 
 public class LoginView extends JPanel {
@@ -71,5 +75,18 @@ public class LoginView extends JPanel {
 		panelSouth.add(loginBtn);
 		
 		add(panelSouth, BorderLayout.SOUTH);
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Image windowBackground = null;
+		try {
+			windowBackground = ImageIO.read(new File("src/img/loginBg.jpg"));
+			g2.drawImage(windowBackground, 0, 0, null);
+		} catch (IOException ex) {
+			System.out.println("File not found.");
+		}
 	}
 }
