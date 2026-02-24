@@ -9,13 +9,15 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import views.LoginWindow;
+import views.RegistryFormulary;
 
 public class Main {
 
 	public static void main(String[] args) {
-		FlatDarkLaf.setup();
-		LoginWindow littleWindow = new LoginWindow();
-		showOnScreen(0, littleWindow);
+		// FlatLightLaf.setup();
+		// LoginWindow littleWindow = new LoginWindow();
+		RegistryFormulary formulary = new RegistryFormulary();
+		showOnScreen(0, formulary);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame) {
