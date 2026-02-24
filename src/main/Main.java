@@ -4,11 +4,16 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
+
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
+
 import views.LoginWindow;
 
 public class Main {
 
 	public static void main(String[] args) {
+		FlatDarkLaf.setup();
 		LoginWindow littleWindow = new LoginWindow();
 		showOnScreen(0, littleWindow);
 	}

@@ -19,6 +19,7 @@ public class LoginView extends JPanel {
 	
 	private void createNorth() {
 		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+		panelNorth.setOpaque(false);
 		
 		ImageIcon icon = new ImageIcon("src/img/icon.jpg");
 		Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -37,12 +38,18 @@ public class LoginView extends JPanel {
 	
 	private void createCenter() {
 		JPanel panelCenter = new JPanel();
+		panelCenter.setOpaque(false);
 		panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.Y_AXIS));
 		
 		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblEmail.setFont(new Font("Georgia", Font.BOLD, 14));
+		
 		JTextField txtEmail = new JTextField();
+		txtEmail.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		JLabel lblEmailError = new JLabel("Please enter your E-mail.");
+		lblEmailError.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblEmailError.setForeground(Color.RED);
 		lblEmailError.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
@@ -53,9 +60,14 @@ public class LoginView extends JPanel {
 		panelCenter.add(Box.createVerticalStrut(15));
 		
 		JLabel lblPassword = new JLabel("Passphrase:");
+		lblPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblPassword.setFont(new Font("Georgia", Font.BOLD, 14));
+		
 		JPasswordField txtPassword = new JPasswordField();
+		txtPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
 		JLabel lblPasswordError = new JLabel("Enter your passphrase");
+		lblPasswordError.setAlignmentX(Component.LEFT_ALIGNMENT);
 		lblPasswordError.setForeground(Color.RED);
 		lblPasswordError.setFont(new Font("Georgia", Font.PLAIN, 13));
 		
@@ -68,15 +80,23 @@ public class LoginView extends JPanel {
 	
 	private void createSouth() {
 		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		panelSouth.setOpaque(false);
+		
+		JLabel lblRegister = new JLabel("No account? Register!");
+		lblRegister.setFont(new Font("Georgia", Font.BOLD, 11));
+		
 		RoundButton loginBtn = new RoundButton("Login");
 		loginBtn.setForeground(Color.BLACK);
 		loginBtn.setBackground(Color.GREEN);
 		
+		panelSouth.add(lblRegister);
 		panelSouth.add(loginBtn);
 		
 		add(panelSouth, BorderLayout.SOUTH);
 	}
 	
+	// Set as a comment temporarily to modify the FlatLaf setup.
+	/*
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -89,4 +109,5 @@ public class LoginView extends JPanel {
 			System.out.println("File not found.");
 		}
 	}
+	*/
 }
