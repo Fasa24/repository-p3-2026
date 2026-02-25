@@ -16,6 +16,7 @@ public class LoginWindow extends JFrame {
 		
 		//add(new LoginView());
 		add(new RegistryFormulary());
+		//add(new MainView());
 		setVisible(true);
 	}
 }

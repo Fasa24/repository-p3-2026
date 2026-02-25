@@ -9,14 +9,16 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import views.LoginWindow;
+import views.MainView;
 import views.RegistryFormulary;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// FlatLightLaf.setup();
+		//FlatLightLaf.setup();
 		// LoginWindow littleWindow = new LoginWindow();
 		RegistryFormulary formulary = new RegistryFormulary();
+		//MainView principal = new MainView();
 		showOnScreen(0, formulary);
 	}
 	
