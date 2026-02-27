@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
+@SuppressWarnings("serial")
 public class RoundButton extends JButton {
-
     private boolean drawBorder;
     private float borderThickness;
 

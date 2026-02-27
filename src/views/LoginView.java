@@ -1,6 +1,7 @@
 package views;
 
 import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -8,106 +9,145 @@ import java.io.IOException;
 
 import components.RoundButton;
 
+@SuppressWarnings("serial")
 public class LoginView extends JPanel {
-	public LoginView() {
-		setLayout(new BorderLayout(10, 10));
-		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		createNorth();
-		createCenter();
-		createSouth();
-	}
-	
-	private void createNorth() {
-		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-		panelNorth.setOpaque(false);
-		
-		ImageIcon icon = new ImageIcon("src/img/icon.jpg");
-		Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon scaledIcon = new ImageIcon(scaledImage);
-		
-		JLabel lblLogo = new JLabel(scaledIcon);
-		
-		JLabel lblWelcome = new JLabel("WELCOME!");
-		lblWelcome.setFont(new Font("Georgia", Font.BOLD, 26));
-		
-		panelNorth.add(lblLogo);
-		panelNorth.add(lblWelcome);
-		
-		add(panelNorth, BorderLayout.NORTH);
-	}
-	
-	private void createCenter() {
-		JPanel panelCenter = new JPanel();
-		panelCenter.setOpaque(false);
-		panelCenter.setLayout(new BoxLayout(panelCenter, BoxLayout.Y_AXIS));
-		
-		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblEmail.setFont(new Font("Georgia", Font.BOLD, 14));
-		
-		JTextField txtEmail = new JTextField();
-		txtEmail.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
-		JLabel lblEmailError = new JLabel("Please enter your E-mail.");
-		lblEmailError.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblEmailError.setForeground(Color.RED);
-		lblEmailError.setFont(new Font("Georgia", Font.PLAIN, 13));
-		
-		panelCenter.add(lblEmail);
-		panelCenter.add(txtEmail);
-		panelCenter.add(lblEmailError);
-		
-		panelCenter.add(Box.createVerticalStrut(15));
-		
-		JLabel lblPassword = new JLabel("Passphrase:");
-		lblPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblPassword.setFont(new Font("Georgia", Font.BOLD, 14));
-		
-		JPasswordField txtPassword = new JPasswordField();
-		txtPassword.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
-		JLabel lblPasswordError = new JLabel("Enter your passphrase");
-		lblPasswordError.setAlignmentX(Component.LEFT_ALIGNMENT);
-		lblPasswordError.setForeground(Color.RED);
-		lblPasswordError.setFont(new Font("Georgia", Font.PLAIN, 13));
-		
-		panelCenter.add(lblPassword);
-		panelCenter.add(txtPassword);
-		panelCenter.add(lblPasswordError);
-		
-		add(panelCenter, BorderLayout.CENTER);
-	}
-	
-	private void createSouth() {
-		JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		panelSouth.setOpaque(false);
-		
-		JLabel lblRegister = new JLabel("No account? Register!");
-		lblRegister.setFont(new Font("Georgia", Font.BOLD, 11));
-		
-		RoundButton loginBtn = new RoundButton("Login");
-		loginBtn.setForeground(Color.BLACK);
-		loginBtn.setBackground(Color.GREEN);
-		
-		panelSouth.add(lblRegister);
-		panelSouth.add(loginBtn);
-		
-		add(panelSouth, BorderLayout.SOUTH);
-	}
-	
-	// Set as a comment temporarily to modify the FlatLaf setup.
-	/*
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
-		
-		Image windowBackground = null;
-		try {
-			windowBackground = ImageIO.read(new File("src/img/loginBg.jpg"));
-			g2.drawImage(windowBackground, 0, 0, null);
-		} catch (IOException ex) {
-			System.out.println("File not found.");
-		}
-	}
-	*/
+    public LoginView() {
+        setLayout(new BorderLayout(10, 10));
+        setOpaque(false);
+        createLeftPanel();
+        createRightPanel();
+    }
+
+    private void createLeftPanel() {
+        JPanel panelLeft = new JPanel(new GridBagLayout());
+        panelLeft.setOpaque(false);
+        panelLeft.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        addLogoAndWelcome(panelLeft, gbc);
+        addLoginFields(panelLeft, gbc);
+        addRegisterButton(panelLeft, gbc);
+
+        add(panelLeft, BorderLayout.WEST);
+    }
+
+    private void addLogoAndWelcome(JPanel panelLeft, GridBagConstraints gbc) {
+        JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        panelNorth.setOpaque(false);
+
+        ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
+        Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        JLabel lblLogo = new JLabel(new ImageIcon(scaledImage));
+
+        JLabel lblWelcome = new JLabel("WELCOME!");
+        lblWelcome.setFont(new Font("Roboto Mono", Font.BOLD, 26));
+
+        panelNorth.add(lblLogo);
+        panelNorth.add(lblWelcome);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panelLeft.add(panelNorth, gbc);
+    }
+
+    private void addLoginFields(JPanel panelLeft, GridBagConstraints gbc) {
+        // E-MAIL
+        JLabel lblEmail = new JLabel("E-mail:");
+        lblEmail.setFont(new Font("Roboto Mono", Font.BOLD, 14));
+        JTextField txtEmail = new JTextField();
+        txtEmail.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblEmailError = new JLabel("An e-mail is required.");
+        lblEmailError.setForeground(Color.GREEN);
+        lblEmailError.setFont(new Font("Roboto Mono", Font.PLAIN, 13));
+
+        gbc.insets = new Insets(2, 2, 2, 2);
+        
+        // PASSWORD
+        JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setFont(new Font("Roboto Mono", Font.BOLD, 14));
+        JPasswordField txtPassword = new JPasswordField();
+        txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        JLabel lblPasswordError = new JLabel("A password is required.");
+        lblPasswordError.setForeground(Color.GREEN);
+        lblPasswordError.setFont(new Font("Roboto Mono", Font.PLAIN, 13));
+ 
+        // CHECKBOX
+        JCheckBox chkRememberEmail = new JCheckBox("Remember e-mail");
+        chkRememberEmail.setEnabled(true);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panelLeft.add(lblEmail, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panelLeft.add(txtEmail, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panelLeft.add(lblEmailError, gbc);
+
+        panelLeft.add(Box.createVerticalStrut(15));
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panelLeft.add(lblPassword, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panelLeft.add(txtPassword, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        panelLeft.add(lblPasswordError, gbc);
+        
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelLeft.add(chkRememberEmail, gbc);
+    }
+
+    private void addRegisterButton(JPanel panelLeft, GridBagConstraints gbc) {
+        JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        panelSouth.setOpaque(false);
+
+        JLabel lblRegister = new JLabel("No account? Register!");
+        lblRegister.setFont(new Font("Roboto Mono", Font.BOLD, 11));
+
+        RoundButton loginBtn = new RoundButton("Login");
+        loginBtn.setForeground(Color.BLACK);
+        loginBtn.setBackground(Color.green);
+
+        panelSouth.add(lblRegister);
+        panelSouth.add(loginBtn);
+
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panelLeft.add(panelSouth, gbc);
+    }
+
+    private void createRightPanel() {
+        JPanel panelRight = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                try {
+                    Image windowBackground = ImageIO.read(new File("src/img/fruitPatternBg.jpg"));
+                    g2.drawImage(windowBackground, 0, 0, getWidth(), getHeight(), this);
+                } catch (IOException ex) {
+                    System.out.println("File not found.");
+                }
+            }
+        };
+        panelRight.setOpaque(false);
+        add(panelRight, BorderLayout.CENTER);
+    }
 }

@@ -3,10 +3,11 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
+@SuppressWarnings("serial")
 public class LoginWindow extends JFrame {
 	public LoginWindow() {
 		setTitle("ONLINE STORE");
-		setSize(450, 330);
+		setSize(600, 390);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -14,8 +15,8 @@ public class LoginWindow extends JFrame {
 		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
 		setIconImage(icon.getImage());
 		
-		//add(new LoginView());
-		add(new RegistryFormulary());
+		add(new LoginView());
+		// add(new RegistryFormulary());
 		//add(new MainView());
 		setVisible(true);
 	}

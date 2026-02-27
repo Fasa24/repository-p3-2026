@@ -2,24 +2,21 @@ package main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 
 import views.LoginWindow;
 import views.MainView;
 import views.RegistryFormulary;
 
 public class Main {
-
 	public static void main(String[] args) {
-		//FlatLightLaf.setup();
-		// LoginWindow littleWindow = new LoginWindow();
-		RegistryFormulary formulary = new RegistryFormulary();
+		FlatDarkLaf.setup();
+		LoginWindow littleWindow = new LoginWindow();
+		// RegistryFormulary formulary = new RegistryFormulary();
 		//MainView principal = new MainView();
-		showOnScreen(0, formulary);
+		showOnScreen(0, littleWindow);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame) {
