@@ -57,25 +57,25 @@ public class LoginView extends JPanel {
     private void addLoginFields(JPanel panelLeft, GridBagConstraints gbc) {
         // E-MAIL
         JLabel lblEmail = new JLabel("E-mail:");
-        lblEmail.setFont(new Font("Roboto Mono", Font.BOLD, 14));
+        lblEmail.setFont(new Font("Arial", Font.BOLD, 14));
         JTextField txtEmail = new JTextField();
         txtEmail.setFont(new Font("Arial", Font.PLAIN, 14));
 
         JLabel lblEmailError = new JLabel("An e-mail is required.");
         lblEmailError.setForeground(Color.GREEN);
-        lblEmailError.setFont(new Font("Roboto Mono", Font.PLAIN, 13));
+        lblEmailError.setFont(new Font("Arial", Font.PLAIN, 13));
 
         gbc.insets = new Insets(2, 2, 2, 2);
         
         // PASSWORD
         JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setFont(new Font("Roboto Mono", Font.BOLD, 14));
+        lblPassword.setFont(new Font("Arial", Font.BOLD, 14));
         JPasswordField txtPassword = new JPasswordField();
         txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
 
         JLabel lblPasswordError = new JLabel("A password is required.");
         lblPasswordError.setForeground(Color.GREEN);
-        lblPasswordError.setFont(new Font("Roboto Mono", Font.PLAIN, 13));
+        lblPasswordError.setFont(new Font("Arial", Font.PLAIN, 13));
  
         // CHECKBOX
         JCheckBox chkRememberEmail = new JCheckBox("Remember e-mail");
@@ -112,17 +112,19 @@ public class LoginView extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelLeft.add(chkRememberEmail, gbc);
     }
-
+    
     private void addRegisterButton(JPanel panelLeft, GridBagConstraints gbc) {
         JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         panelSouth.setOpaque(false);
 
-        JLabel lblRegister = new JLabel("No account? Register!");
-        lblRegister.setFont(new Font("Roboto Mono", Font.BOLD, 11));
+        JLabel lblRegister = new JLabel("No account? Create one.");
+        lblRegister.setFont(new Font("Arial", Font.BOLD, 11));
 
-        RoundButton loginBtn = new RoundButton("Login");
-        loginBtn.setForeground(Color.BLACK);
-        loginBtn.setBackground(Color.green);
+        JButton loginBtn = new JButton("Login");
+        loginBtn.setForeground(Color.WHITE);
+        loginBtn.setBackground(new Color(0, 128, 0));
+        loginBtn.setFocusPainted(false);
+        loginBtn.setPreferredSize(new Dimension(100, 35));
 
         panelSouth.add(lblRegister);
         panelSouth.add(loginBtn);
@@ -132,7 +134,7 @@ public class LoginView extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelLeft.add(panelSouth, gbc);
     }
-
+    
     private void createRightPanel() {
         JPanel panelRight = new JPanel() {
             @Override
