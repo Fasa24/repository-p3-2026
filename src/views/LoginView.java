@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,11 +13,18 @@ import components.RoundButton;
 
 @SuppressWarnings("serial")
 public class LoginView extends JPanel {
+	private JButton loginBtn;
+	private JTextField txtEmail;
+	private JPasswordField txtPassword;
+	private JLabel lblEmailError;
+	private JLabel lblPasswordError;
+	
     public LoginView() {
         setLayout(new BorderLayout(10, 10));
         setOpaque(false);
         createLeftPanel();
         createRightPanel();
+        verification();
     }
 
     private void createLeftPanel() {
@@ -58,24 +67,26 @@ public class LoginView extends JPanel {
         // E-MAIL
         JLabel lblEmail = new JLabel("E-mail:");
         lblEmail.setFont(new Font("Arial", Font.BOLD, 14));
-        JTextField txtEmail = new JTextField();
+        txtEmail = new JTextField();
         txtEmail.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JLabel lblEmailError = new JLabel("An e-mail is required.");
-        lblEmailError.setForeground(Color.GREEN);
+        lblEmailError = new JLabel("An e-mail is required.");
+        lblEmailError.setForeground(Color.RED);
         lblEmailError.setFont(new Font("Arial", Font.PLAIN, 13));
+        lblEmailError.setText(" ");
 
         gbc.insets = new Insets(2, 2, 2, 2);
         
         // PASSWORD
         JLabel lblPassword = new JLabel("Password:");
         lblPassword.setFont(new Font("Arial", Font.BOLD, 14));
-        JPasswordField txtPassword = new JPasswordField();
+        txtPassword = new JPasswordField();
         txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
 
-        JLabel lblPasswordError = new JLabel("A password is required.");
-        lblPasswordError.setForeground(Color.GREEN);
+        lblPasswordError = new JLabel("A password is required.");
+        lblPasswordError.setForeground(Color.RED);
         lblPasswordError.setFont(new Font("Arial", Font.PLAIN, 13));
+        lblPasswordError.setText(" ");
  
         // CHECKBOX
         JCheckBox chkRememberEmail = new JCheckBox("Remember e-mail");
@@ -120,7 +131,7 @@ public class LoginView extends JPanel {
         JLabel lblRegister = new JLabel("No account? Create one.");
         lblRegister.setFont(new Font("Arial", Font.BOLD, 11));
 
-        JButton loginBtn = new JButton("Login");
+        loginBtn = new JButton("Login");
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setBackground(new Color(0, 128, 0));
         loginBtn.setFocusPainted(false);
@@ -133,6 +144,30 @@ public class LoginView extends JPanel {
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelLeft.add(panelSouth, gbc);
+        
+        
+    }
+    
+    private void verification() {
+    	loginBtn.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) {
+        		// EMAIL
+        		if(txtEmail.getText().isEmpty()) {
+        			lblEmailError.setText("An e-mail is required.");
+        		}
+        		else {
+        			lblEmailError.setText(" ");
+        		}
+        		
+        		// PASSWORD
+        		if(txtPassword.getPassword().length == 0) {
+        			lblPasswordError.setText("A password is required.");
+        		}
+        		else {
+        			lblPasswordError.setText(" ");
+        		}
+        	}
+        });
     }
     
     private void createRightPanel() {

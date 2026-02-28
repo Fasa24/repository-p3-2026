@@ -1,12 +1,30 @@
 package views;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import utils.AppFont;
 
 @SuppressWarnings("serial")
 public class FormularyRegistry extends JFrame {
+	private JButton createAccountBtn;
+	private JTextField txtName;
+	private JTextField txtEmail;
+	private JPasswordField passwordField;
+	private JTextArea textArea;
+	private JTextField txtPc;
+	private JCheckBox cbTerms;
+	private JLabel lblNameError;
+	private JLabel lblEmailError;
+	private JLabel lblPasswordError;
+	private JLabel lblAddressError;
+	private JLabel lblPcError;
+	private JLabel lblTermsError;
+	
+	
     public FormularyRegistry() {
         setSize(350, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -19,6 +37,7 @@ public class FormularyRegistry extends JFrame {
         setIconImage(icono);
 
         initializeComponents();
+        verification();
 
         setVisible(true);
     }
@@ -43,23 +62,31 @@ public class FormularyRegistry extends JFrame {
         panelComponentes.setOpaque(false);
 
         // FORM FIELDS
-        addField(panelComponentes, "Name", new JTextField());
-        addField(panelComponentes, "E-mail", new JTextField());
+        addField(panelComponentes, "Name", txtName = new JTextField());
+        addLabel(panelComponentes, lblNameError = new JLabel());
+        addField(panelComponentes, "E-mail", txtEmail = new JTextField());
+        addLabel(panelComponentes, lblEmailError = new JLabel());
         addPasswordField(panelComponentes, "Password");
+        addLabel(panelComponentes, lblPasswordError = new JLabel());
         addTextAreaField(panelComponentes, "Address", 5, 20);
-        addField(panelComponentes, "Postal Code", new JTextField());
+        addLabel(panelComponentes, lblAddressError = new JLabel());
+        addField(panelComponentes, "Postal Code", txtPc = new JTextField());
+        addLabel(panelComponentes, lblPcError = new JLabel());
+        
 
         // GENDER SELECTION COMBO BOX
         addGenderField(panelComponentes);
 
         // ToS CHECKBOX
-        JCheckBox cbTerms = new JCheckBox("I agree to the Terms of Service.");
+        cbTerms = new JCheckBox("I agree to the Terms of Service.");
         cbTerms.setAlignmentX(CENTER_ALIGNMENT);
         panelComponentes.add(cbTerms);
+        addLabel(panelComponentes, lblTermsError = new JLabel());
         panelComponentes.add(Box.createVerticalStrut(10));
         
+        
         // ACCOUNT BUTTON
-        JButton createAccountBtn = new JButton("Create Account");
+        createAccountBtn = new JButton("Create Account");
         createAccountBtn.setBackground(new Color(0, 128, 0));
         createAccountBtn.setForeground(Color.WHITE);
         createAccountBtn.setAlignmentX(CENTER_ALIGNMENT);
@@ -81,11 +108,18 @@ public class FormularyRegistry extends JFrame {
         panel.add(textField);
         panel.add(Box.createVerticalStrut(10));
     }
+    
+    private void addLabel(JPanel panel, JLabel lbl) {
+    	lbl.setAlignmentX(CENTER_ALIGNMENT);
+    	lbl.setForeground(Color.RED);
+    	lbl.setVisible(false);
+    	panel.add(lbl);
+    }
 
     private void addPasswordField(JPanel panel, String label) {
         JLabel lbl = new JLabel(label);
         lbl.setAlignmentX(CENTER_ALIGNMENT);
-        JPasswordField passwordField = new JPasswordField();
+        passwordField = new JPasswordField();
         passwordField.setPreferredSize(new Dimension(250, 30));
         passwordField.setMaximumSize(new Dimension(250, 30));
         panel.add(lbl);
@@ -98,7 +132,7 @@ public class FormularyRegistry extends JFrame {
         lbl.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(lbl);
 
-        JTextArea textArea = new JTextArea(rows, cols);
+        textArea = new JTextArea(rows, cols);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setAlignmentX(CENTER_ALIGNMENT);
@@ -122,5 +156,64 @@ public class FormularyRegistry extends JFrame {
         genderComboBox.setMaximumSize(new Dimension(250, 30));
         panel.add(genderComboBox);
         panel.add(Box.createVerticalStrut(10));
+    }
+    
+    private void verification() {
+    	createAccountBtn.addActionListener(new ActionListener(){
+        	public void actionPerformed(ActionEvent e) {
+        		// NAME
+        		if(txtName.getText().isEmpty()) {
+        			lblNameError.setText("Name is required.");
+        			lblNameError.setVisible(true);
+        		}
+        		else {
+        			lblNameError.setVisible(false);
+        		}
+        		// EMAIL
+        		if(txtEmail.getText().isEmpty()) {
+        			lblEmailError.setText("email is required.");
+        			lblEmailError.setVisible(true);
+        		}
+        		else {
+        			lblEmailError.setVisible(false);
+        		}
+        		
+        		// PASSWORD
+        		if(passwordField.getPassword().length == 0) {
+        			lblPasswordError.setText("A password is required.");
+        			lblPasswordError.setVisible(true);
+        		}
+        		else {
+        			lblPasswordError.setVisible(false);
+        		}
+        		
+        		// ADDRESS
+        		if(textArea.getText().isEmpty()) {
+        			lblAddressError.setText("Address is required.");
+        			lblAddressError.setVisible(true);
+        		}
+        		else {
+        			lblAddressError.setVisible(false);
+        		}
+        		
+        		// POSTAL CODE
+        		if(txtPc.getText().isEmpty()) {
+        			lblPcError.setText("A postal code is required.");
+        			lblPcError.setVisible(true);
+        		}
+        		else {
+        			lblPcError.setVisible(false);
+        		}
+        		
+        		// TERMS
+        		if(!cbTerms.isSelected()) {
+        			lblTermsError.setText("You must accept the Terms and Conditions.");
+        			lblTermsError.setVisible(true);
+        		}
+        		else {
+        			lblTermsError.setVisible(false);
+        		}
+        	}
+        });
     }
 }

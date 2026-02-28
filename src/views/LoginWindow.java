@@ -15,8 +15,8 @@ public class LoginWindow extends JFrame {
 		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
 		setIconImage(icon.getImage());
 		
-		// add(new LoginView());
-		add(new FormularyRegistry());
+		add(new LoginView());
+		//add(new FormularyRegistry());
 		//add(new MainView());
 		setVisible(true);
 	}
