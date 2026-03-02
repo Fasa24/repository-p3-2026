@@ -151,12 +151,15 @@ public class LoginView extends JPanel {
     private void verification() {
     	loginBtn.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
+        		int cont = 0;
+        		
         		// EMAIL
         		if(txtEmail.getText().trim().isEmpty()) {
         			lblEmailError.setText("An e-mail is required.");
         		}
         		else {
         			lblEmailError.setText(" ");
+        			cont++;
         		}
         		
         		// PASSWORD
@@ -165,6 +168,11 @@ public class LoginView extends JPanel {
         		}
         		else {
         			lblPasswordError.setText(" ");
+        			cont++;
+        		}
+        		
+        		if(cont == 2) {
+        			JOptionPane.showMessageDialog(null, "Login successfull!", "eManza", JOptionPane.INFORMATION_MESSAGE);
         		}
         	}
         });
