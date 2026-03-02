@@ -152,7 +152,7 @@ public class LoginView extends JPanel {
     	loginBtn.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
         		// EMAIL
-        		if(txtEmail.getText().isEmpty()) {
+        		if(txtEmail.getText().trim().isEmpty()) {
         			lblEmailError.setText("An e-mail is required.");
         		}
         		else {
@@ -160,7 +160,7 @@ public class LoginView extends JPanel {
         		}
         		
         		// PASSWORD
-        		if(txtPassword.getPassword().length == 0) {
+        		if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
         			lblPasswordError.setText("A password is required.");
         		}
         		else {

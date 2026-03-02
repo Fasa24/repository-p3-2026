@@ -161,48 +161,55 @@ public class FormularyRegistry extends JFrame {
     private void verification() {
     	createAccountBtn.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
+        		int cont = 0;
+        		
         		// NAME
-        		if(txtName.getText().isEmpty()) {
+        		if(txtName.getText().trim().isEmpty()) {
         			lblNameError.setText("Name is required.");
         			lblNameError.setVisible(true);
         		}
         		else {
         			lblNameError.setVisible(false);
+        			cont++;
         		}
         		// EMAIL
-        		if(txtEmail.getText().isEmpty()) {
+        		if(txtEmail.getText().trim().isEmpty()) {
         			lblEmailError.setText("email is required.");
         			lblEmailError.setVisible(true);
         		}
         		else {
         			lblEmailError.setVisible(false);
+        			cont++;
         		}
         		
         		// PASSWORD
-        		if(passwordField.getPassword().length == 0) {
+        		if(String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
         			lblPasswordError.setText("A password is required.");
         			lblPasswordError.setVisible(true);
         		}
         		else {
         			lblPasswordError.setVisible(false);
+        			cont++;
         		}
         		
         		// ADDRESS
-        		if(textArea.getText().isEmpty()) {
+        		if(textArea.getText().trim().isEmpty()) {
         			lblAddressError.setText("Address is required.");
         			lblAddressError.setVisible(true);
         		}
         		else {
         			lblAddressError.setVisible(false);
+        			cont++;
         		}
         		
         		// POSTAL CODE
-        		if(txtPc.getText().isEmpty()) {
+        		if(txtPc.getText().trim().isEmpty()) {
         			lblPcError.setText("A postal code is required.");
         			lblPcError.setVisible(true);
         		}
         		else {
         			lblPcError.setVisible(false);
+        			cont++;
         		}
         		
         		// TERMS
@@ -212,6 +219,11 @@ public class FormularyRegistry extends JFrame {
         		}
         		else {
         			lblTermsError.setVisible(false);
+        			cont++;
+        		}
+        		
+        		if(cont == 6) {
+        			JOptionPane.showMessageDialog(null, "Account created successfully!", "eManza", JOptionPane.INFORMATION_MESSAGE);
         		}
         	}
         });

@@ -13,10 +13,10 @@ import views.FormularyRegistry;
 public class Main {
 	public static void main(String[] args) {
 		FlatDarkLaf.setup();
-		LoginWindow littleWindow = new LoginWindow();
-		//FormularyRegistry formulary = new FormularyRegistry();
+		//LoginWindow littleWindow = new LoginWindow();
+		FormularyRegistry formulary = new FormularyRegistry();
 		// MainView principal = new MainView();
-		showOnScreen(0, littleWindow);
+		showOnScreen(0, formulary);
 	}
 	
 	public static void showOnScreen(int screen, JFrame frame) {
