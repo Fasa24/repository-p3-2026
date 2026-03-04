@@ -23,6 +23,7 @@ public class FormularyRegistry extends JFrame {
 	private JLabel lblAddressError;
 	private JLabel lblPcError;
 	private JLabel lblTermsError;
+	private JButton returnLoginBtn;
 	
 	
     public FormularyRegistry() {
@@ -91,7 +92,25 @@ public class FormularyRegistry extends JFrame {
         createAccountBtn.setForeground(Color.WHITE);
         createAccountBtn.setAlignmentX(CENTER_ALIGNMENT);
         panelComponentes.add(createAccountBtn);
+        
+        // RETURN TO LOGIN BUTTON
+        returnLoginBtn = new JButton("Return");
+        returnLoginBtn.setBackground(new Color(0, 128, 0));
+        returnLoginBtn.setForeground(Color.WHITE);
+        returnLoginBtn.setAlignmentX(CENTER_ALIGNMENT);
+        
+        returnLoginBtn.addActionListener(e-> {
+        	int option = JOptionPane.showConfirmDialog(this, "Are you sure?");
+        	
+        	if(option == JOptionPane.YES_OPTION) {
+        		new LoginWindow();
+        		dispose();
+        	}
+        });
+        
+        panelComponentes.add(returnLoginBtn);
 
+        
         // Add scroll pane to the panel
         JScrollPane scroll = new JScrollPane(panelComponentes);
         scroll.setHorizontalScrollBar(null);

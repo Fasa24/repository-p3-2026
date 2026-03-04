@@ -13,18 +13,21 @@ import components.RoundButton;
 
 @SuppressWarnings("serial")
 public class LoginView extends JPanel {
+	LoginWindow window;
 	private JButton loginBtn;
 	private JTextField txtEmail;
 	private JPasswordField txtPassword;
 	private JLabel lblEmailError;
 	private JLabel lblPasswordError;
 	
-    public LoginView() {
+    public LoginView(LoginWindow window) {
+    	this.window = window;
+    	
         setLayout(new BorderLayout(10, 10));
         setOpaque(false);
         createLeftPanel();
         createRightPanel();
-        verification();
+   
     }
 
     private void createLeftPanel() {
@@ -136,6 +139,8 @@ public class LoginView extends JPanel {
         loginBtn.setBackground(new Color(0, 128, 0));
         loginBtn.setFocusPainted(false);
         loginBtn.setPreferredSize(new Dimension(100, 35));
+        
+        loginBtn.addActionListener(e-> handleRegistration());
 
         panelSouth.add(lblRegister);
         panelSouth.add(loginBtn);
@@ -144,38 +149,45 @@ public class LoginView extends JPanel {
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panelLeft.add(panelSouth, gbc);
-        
-        
     }
     
-    private void verification() {
-    	loginBtn.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e) {
-        		int cont = 0;
-        		
-        		// EMAIL
-        		if(txtEmail.getText().trim().isEmpty()) {
-        			lblEmailError.setText("An e-mail is required.");
-        		}
-        		else {
-        			lblEmailError.setText(" ");
-        			cont++;
-        		}
-        		
-        		// PASSWORD
-        		if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
-        			lblPasswordError.setText("A password is required.");
-        		}
-        		else {
-        			lblPasswordError.setText(" ");
-        			cont++;
-        		}
-        		
-        		if(cont == 2) {
-        			JOptionPane.showMessageDialog(null, "Login successfull!", "eManza", JOptionPane.INFORMATION_MESSAGE);
-        		}
-        	}
-        });
+    private boolean verification() {
+    	int cont = 0;
+		// EMAIL
+		if(txtEmail.getText().trim().isEmpty()) {
+			lblEmailError.setText("An e-mail is required.");
+		}
+		else {
+			lblEmailError.setText(" ");
+			System.out.println("text");
+			cont++;
+		}
+		
+		// PASSWORD
+		if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
+			lblPasswordError.setText("A password is required.");
+		}
+		else {
+			System.out.println("pass");
+			lblPasswordError.setText(" ");
+			cont++;
+		}
+		
+    	if(cont == 2) {
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
+    }
+    
+    private void handleRegistration() {
+    	if(verification()) {
+    		JOptionPane.showMessageDialog(null, "Login successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
+    		
+    		new FormularyRegistry();
+    		window.dispose();
+    	}
     }
     
     private void createRightPanel() {

@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import com.formdev.flatlaf.FlatDarkLaf;
 
 import views.LoginWindow;
-import views.MainView;
 import views.FormularyRegistry;
 
 public class Main {
@@ -15,7 +14,6 @@ public class Main {
 		FlatDarkLaf.setup();
 		LoginWindow littleWindow = new LoginWindow();
 		//FormularyRegistry formulary = new FormularyRegistry();
-		// MainView principal = new MainView();
 		showOnScreen(0, littleWindow);
 	}
 	
