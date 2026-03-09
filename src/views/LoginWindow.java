@@ -16,7 +16,6 @@ public class LoginWindow extends JFrame {
 		setIconImage(icon.getImage());
 		
 		add(new LoginView(this));
-		//add(new FormularyRegistry());
 		setVisible(true);
 	}
 }

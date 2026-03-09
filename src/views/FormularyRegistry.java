@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import utils.AppFont;
 
@@ -23,7 +25,9 @@ public class FormularyRegistry extends JFrame {
 	private JLabel lblAddressError;
 	private JLabel lblPcError;
 	private JLabel lblTermsError;
+	private JLabel lblGenderError;
 	private JButton returnLoginBtn;
+	private JComboBox genderComboBox;
 	
 	
     public FormularyRegistry() {
@@ -94,6 +98,8 @@ public class FormularyRegistry extends JFrame {
         createAccountBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelComponentes.add(createAccountBtn);
         
+        createAccountBtn.addActionListener(e-> verification());
+        
         // RETURN TO LOGIN BUTTON
         returnLoginBtn = new JButton("Return");
         returnLoginBtn.setBackground(new Color(0, 128, 0));
@@ -109,6 +115,8 @@ public class FormularyRegistry extends JFrame {
         		dispose();
         	}
         });
+        
+        assignListeners();
         
         panelComponentes.add(returnLoginBtn);
 
@@ -133,6 +141,7 @@ public class FormularyRegistry extends JFrame {
     private void addLabel(JPanel panel, JLabel lbl) {
     	lbl.setAlignmentX(CENTER_ALIGNMENT);
     	lbl.setForeground(Color.RED);
+    	lbl.setText(" ");
     	lbl.setVisible(false);
     	panel.add(lbl);
     }
@@ -171,17 +180,107 @@ public class FormularyRegistry extends JFrame {
         lblGender.setAlignmentX(CENTER_ALIGNMENT);
         panel.add(lblGender);
 
-        String[] genders = {"Male", "Female", "Other", "Prefer not to say"};
+        String[] genders = {"Select" ,"Male", "Female", "Other", "Prefer not to say"};
         JComboBox<String> genderComboBox = new JComboBox<>(genders);
+        addLabel(panel, lblGenderError = new JLabel());
+        
         genderComboBox.setPreferredSize(new Dimension(250, 30));
         genderComboBox.setMaximumSize(new Dimension(250, 30));
         panel.add(genderComboBox);
         panel.add(Box.createVerticalStrut(10));
     }
     
+    private void assignListeners() {
+    	txtName.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    	
+    	txtEmail.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    	
+    	passwordField.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    	
+    	textArea.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    	
+    	txtPc.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    }
+    
+    
+    
     private void verification() {
-    	createAccountBtn.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e) {
+    	
         		int cont = 0;
         		
         		// NAME
@@ -223,6 +322,16 @@ public class FormularyRegistry extends JFrame {
         			cont++;
         		}
         		
+        		// GENDER
+        		/*if(genderComboBox.getSelectedIndex() == 0) {
+        			lblGenderError.setText("A gender is required");
+        			lblGenderError.setVisible(true);
+        		}
+        		else {
+        			lblGenderError.setVisible(false);
+        			cont++;
+        		}*/
+        		
         		// POSTAL CODE
         		if(txtPc.getText().trim().isEmpty()) {
         			lblPcError.setText("A postal code is required.");
@@ -243,10 +352,8 @@ public class FormularyRegistry extends JFrame {
         			cont++;
         		}
         		
-        		if(cont == 6) {
+        		if(cont == 7) {
         			JOptionPane.showMessageDialog(null, "Account created successfully!", "eManza", JOptionPane.INFORMATION_MESSAGE);
         		}
-        	}
-        });
     }
 }

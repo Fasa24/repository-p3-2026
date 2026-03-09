@@ -3,6 +3,9 @@ package views;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,6 +100,8 @@ public class LoginView extends JPanel {
         JCheckBox chkRememberEmail = new JCheckBox("Remember e-mail");
         chkRememberEmail.setEnabled(true);
         
+        assignListeners();
+        
         gbc.gridx = 0;
         gbc.gridy = 1;
         panelLeft.add(lblEmail, gbc);
@@ -171,6 +176,42 @@ public class LoginView extends JPanel {
         panelLeft.add(panelSouth, gbc);
     }
     
+    private void assignListeners() {
+    	txtEmail.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    	
+    	txtPassword.getDocument().addDocumentListener(new DocumentListener() {
+    		@Override
+    		public void removeUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void insertUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    		
+    		@Override
+    		public void changedUpdate(DocumentEvent e) {
+    			verification();
+    		}
+    	});
+    }
+    
     private boolean verification() {
     	int cont = 0;
 		// EMAIL
@@ -179,7 +220,6 @@ public class LoginView extends JPanel {
 		}
 		else {
 			lblEmailError.setText(" ");
-			System.out.println("text");
 			cont++;
 		}
 		
@@ -188,7 +228,6 @@ public class LoginView extends JPanel {
 			lblPasswordError.setText("A password is required.");
 		}
 		else {
-			System.out.println("pass");
 			lblPasswordError.setText(" ");
 			cont++;
 		}
@@ -205,7 +244,7 @@ public class LoginView extends JPanel {
     	if(verification()) {
     		JOptionPane.showMessageDialog(null, "Login successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
     		
-    		new FormularyRegistry();
+    		new Dashboard();
     		window.dispose();
     	}
     }
