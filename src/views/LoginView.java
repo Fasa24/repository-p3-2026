@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -133,12 +135,30 @@ public class LoginView extends JPanel {
 
         JLabel lblRegister = new JLabel("No account? Create one.");
         lblRegister.setFont(new Font("Arial", Font.BOLD, 11));
+        lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        lblRegister.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e ) {
+        		new FormularyRegistry();
+        		window.dispose();
+        	}
+        	
+        	public void mouseEntered(MouseEvent e) {
+        		lblRegister.setForeground(Color.BLUE);
+        	}
+        	
+        	public void mouseExited(MouseEvent e) {
+        		lblRegister.setForeground(Color.WHITE);
+        	}
+        });
 
         loginBtn = new JButton("Login");
         loginBtn.setForeground(Color.WHITE);
         loginBtn.setBackground(new Color(0, 128, 0));
         loginBtn.setFocusPainted(false);
         loginBtn.setPreferredSize(new Dimension(100, 35));
+        loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         loginBtn.addActionListener(e-> handleRegistration());
 

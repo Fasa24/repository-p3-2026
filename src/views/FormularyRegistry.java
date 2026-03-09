@@ -91,6 +91,7 @@ public class FormularyRegistry extends JFrame {
         createAccountBtn.setBackground(new Color(0, 128, 0));
         createAccountBtn.setForeground(Color.WHITE);
         createAccountBtn.setAlignmentX(CENTER_ALIGNMENT);
+        createAccountBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelComponentes.add(createAccountBtn);
         
         // RETURN TO LOGIN BUTTON
@@ -98,6 +99,7 @@ public class FormularyRegistry extends JFrame {
         returnLoginBtn.setBackground(new Color(0, 128, 0));
         returnLoginBtn.setForeground(Color.WHITE);
         returnLoginBtn.setAlignmentX(CENTER_ALIGNMENT);
+        returnLoginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         
         returnLoginBtn.addActionListener(e-> {
         	int option = JOptionPane.showConfirmDialog(this, "Are you sure?");
