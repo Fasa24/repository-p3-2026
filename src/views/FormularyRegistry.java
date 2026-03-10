@@ -27,7 +27,7 @@ public class FormularyRegistry extends JFrame {
 	private JLabel lblTermsError;
 	private JLabel lblGenderError;
 	private JButton returnLoginBtn;
-	private JComboBox genderComboBox;
+	private JComboBox<String> genderComboBox;
 	
 	
     public FormularyRegistry() {
@@ -78,9 +78,10 @@ public class FormularyRegistry extends JFrame {
         addField(panelComponentes, "Postal Code", txtPc = new JTextField());
         addLabel(panelComponentes, lblPcError = new JLabel());
         
-
         // GENDER SELECTION COMBO BOX
         addGenderField(panelComponentes);
+        addLabel(panelComponentes, lblGenderError = new JLabel());
+        genderComboBox.addActionListener(e -> verification());
 
         // ToS CHECKBOX
         cbTerms = new JCheckBox("I agree to the Terms of Service.");
@@ -88,7 +89,7 @@ public class FormularyRegistry extends JFrame {
         panelComponentes.add(cbTerms);
         addLabel(panelComponentes, lblTermsError = new JLabel());
         panelComponentes.add(Box.createVerticalStrut(10));
-        
+        cbTerms.addActionListener(e -> verification());
         
         // ACCOUNT BUTTON
         createAccountBtn = new JButton("Create Account");
@@ -98,7 +99,7 @@ public class FormularyRegistry extends JFrame {
         createAccountBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         panelComponentes.add(createAccountBtn);
         
-        createAccountBtn.addActionListener(e-> verification());
+        createAccountBtn.addActionListener(e-> register());
         
         // RETURN TO LOGIN BUTTON
         returnLoginBtn = new JButton("Return");
@@ -120,7 +121,6 @@ public class FormularyRegistry extends JFrame {
         
         panelComponentes.add(returnLoginBtn);
 
-        
         // Add scroll pane to the panel
         JScrollPane scroll = new JScrollPane(panelComponentes);
         scroll.setHorizontalScrollBar(null);
@@ -181,13 +181,31 @@ public class FormularyRegistry extends JFrame {
         panel.add(lblGender);
 
         String[] genders = {"Select" ,"Male", "Female", "Other", "Prefer not to say"};
-        JComboBox<String> genderComboBox = new JComboBox<>(genders);
-        addLabel(panel, lblGenderError = new JLabel());
+        genderComboBox = new JComboBox<>(genders);
+        
         
         genderComboBox.setPreferredSize(new Dimension(250, 30));
         genderComboBox.setMaximumSize(new Dimension(250, 30));
         panel.add(genderComboBox);
         panel.add(Box.createVerticalStrut(10));
+    }
+    
+    private void register() {
+    	if(verification()) {
+    		JOptionPane.showMessageDialog(null, "Registration successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
+    	}
+    }
+    
+    private boolean verificateGender() {
+    	if(genderComboBox.getSelectedIndex() == 0) {
+    		lblGenderError.setText("A gender is required");
+			lblGenderError.setVisible(true);
+    		return false;
+    	}
+    	else {
+    		lblGenderError.setVisible(false);
+    		return true;
+    	}
     }
     
     private void assignListeners() {
@@ -277,83 +295,74 @@ public class FormularyRegistry extends JFrame {
     	});
     }
     
-    
-    
-    private void verification() {
-    	
-        		int cont = 0;
-        		
-        		// NAME
-        		if(txtName.getText().trim().isEmpty()) {
-        			lblNameError.setText("Name is required.");
-        			lblNameError.setVisible(true);
-        		}
-        		else {
-        			lblNameError.setVisible(false);
-        			cont++;
-        		}
-        		// EMAIL
-        		if(txtEmail.getText().trim().isEmpty()) {
-        			lblEmailError.setText("email is required.");
-        			lblEmailError.setVisible(true);
-        		}
-        		else {
-        			lblEmailError.setVisible(false);
-        			cont++;
-        		}
-        		
-        		// PASSWORD
-        		if(String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
-        			lblPasswordError.setText("A password is required.");
-        			lblPasswordError.setVisible(true);
-        		}
-        		else {
-        			lblPasswordError.setVisible(false);
-        			cont++;
-        		}
-        		
-        		// ADDRESS
-        		if(textArea.getText().trim().isEmpty()) {
-        			lblAddressError.setText("Address is required.");
-        			lblAddressError.setVisible(true);
-        		}
-        		else {
-        			lblAddressError.setVisible(false);
-        			cont++;
-        		}
-        		
-        		// GENDER
-        		/*if(genderComboBox.getSelectedIndex() == 0) {
-        			lblGenderError.setText("A gender is required");
-        			lblGenderError.setVisible(true);
-        		}
-        		else {
-        			lblGenderError.setVisible(false);
-        			cont++;
-        		}*/
-        		
-        		// POSTAL CODE
-        		if(txtPc.getText().trim().isEmpty()) {
-        			lblPcError.setText("A postal code is required.");
-        			lblPcError.setVisible(true);
-        		}
-        		else {
-        			lblPcError.setVisible(false);
-        			cont++;
-        		}
-        		
-        		// TERMS
-        		if(!cbTerms.isSelected()) {
-        			lblTermsError.setText("You must accept the Terms and Conditions.");
-        			lblTermsError.setVisible(true);
-        		}
-        		else {
-        			lblTermsError.setVisible(false);
-        			cont++;
-        		}
-        		
-        		if(cont == 7) {
-        			JOptionPane.showMessageDialog(null, "Account created successfully!", "eManza", JOptionPane.INFORMATION_MESSAGE);
-        		}
+    private boolean verification() {
+    	int cont = 0;
+		
+		// NAME
+		if(txtName.getText().trim().isEmpty()) {
+			lblNameError.setText("Name is required.");
+			lblNameError.setVisible(true);
+		}
+		else {
+			lblNameError.setVisible(false);
+			cont++;
+		}
+		// EMAIL
+		if(txtEmail.getText().trim().isEmpty()) {
+			lblEmailError.setText("email is required.");
+			lblEmailError.setVisible(true);
+		}
+		else {
+			lblEmailError.setVisible(false);
+			cont++;
+		}
+		
+		// PASSWORD
+		if(String.valueOf(passwordField.getPassword()).trim().isEmpty()) {
+			lblPasswordError.setText("A password is required.");
+			lblPasswordError.setVisible(true);
+		}
+		else {
+			lblPasswordError.setVisible(false);
+			cont++;
+		}
+		
+		// ADDRESS
+		if(textArea.getText().trim().isEmpty()) {
+			lblAddressError.setText("Address is required.");
+			lblAddressError.setVisible(true);
+		}
+		else {
+			lblAddressError.setVisible(false);
+			cont++;
+		}
+		
+		// POSTAL CODE
+		if(txtPc.getText().trim().isEmpty()) {
+			lblPcError.setText("A postal code is required.");
+			lblPcError.setVisible(true);
+		}
+		else {
+			lblPcError.setVisible(false);
+			cont++;
+		}
+		
+		// TERMS
+		if(!cbTerms.isSelected()) {
+			lblTermsError.setText("You must accept the Terms and Conditions.");
+			lblTermsError.setVisible(true);
+		}
+		else {
+			lblTermsError.setVisible(false);
+			cont++;
+		}
+		
+		boolean genderValid = verificateGender();
+		if(cont == 6 && genderValid) {
+			return true;
+		}
+		else {
+			return false;
+		}
     }
 }
