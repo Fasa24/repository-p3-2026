@@ -150,7 +150,7 @@ public class LoginView extends JPanel {
         	}
         	
         	public void mouseEntered(MouseEvent e) {
-        		lblRegister.setForeground(Color.BLUE);
+        		lblRegister.setForeground(Color.GREEN);
         	}
         	
         	public void mouseExited(MouseEvent e) {
