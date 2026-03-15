@@ -3,6 +3,14 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -32,10 +40,22 @@ public class FormularyRegistry extends JFrame {
 	
     public FormularyRegistry() {
         setSize(350, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         setTitle("eManza - Create Account");
         setLocationRelativeTo(null);
+        
+        addWindowListener(new WindowAdapter() {
+        	@Override
+			public void windowOpened(WindowEvent e) {
+        		txtName.requestFocusInWindow();
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				exit();
+			}
+        });
         
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image icono = tk.getImage("src/img/appleLogo.jpg");
@@ -45,6 +65,14 @@ public class FormularyRegistry extends JFrame {
         verification();
 
         setVisible(true);
+    }
+    
+    private void exit() {
+    	int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to leave? all unsaved data will be lost.");
+		
+		if(option == JOptionPane.YES_OPTION) {
+			System.exit(0);
+		}
     }
 
     public void initializeComponents() {
@@ -117,6 +145,8 @@ public class FormularyRegistry extends JFrame {
         	}
         });
         
+        setFocusBorder();
+        validateTxtFields();
         assignListeners();
         
         panelComponentes.add(returnLoginBtn);
@@ -196,6 +226,92 @@ public class FormularyRegistry extends JFrame {
     	}
     }
     
+    private void setFocusBorder() {
+    	txtName.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			txtName.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtName.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	txtEmail.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			txtEmail.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtEmail.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	txtEmail.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			txtEmail.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtEmail.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	passwordField.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	textArea.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			textArea.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				textArea.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	txtPc.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			txtPc.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				txtPc.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    	
+    	genderComboBox.addFocusListener(new FocusAdapter() {
+    		@Override
+			public void focusGained(FocusEvent e) {
+    			genderComboBox.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				genderComboBox.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+			}
+    	});
+    }
+    
     private boolean verificateGender() {
     	if(genderComboBox.getSelectedIndex() == 0) {
     		lblGenderError.setText("A gender is required");
@@ -206,6 +322,26 @@ public class FormularyRegistry extends JFrame {
     		lblGenderError.setVisible(false);
     		return true;
     	}
+    }
+    
+    private void validateTxtFields() {
+    	txtName.addKeyListener(new KeyAdapter() {
+    		@Override
+			public void keyTyped(KeyEvent e) {
+				if(Character.isDigit(e.getKeyChar()) || !Character.isAlphabetic(e.getKeyChar())) {
+					e.consume();
+				}
+    		}
+    	});
+    	
+    	txtPc.addKeyListener(new KeyAdapter() {
+    		@Override
+			public void keyTyped(KeyEvent e) {
+				if(!Character.isDigit(e.getKeyChar())) {
+					e.consume();
+				}
+    		}
+    	});
     }
     
     private void assignListeners() {
