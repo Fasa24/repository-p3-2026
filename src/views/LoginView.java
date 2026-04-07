@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 
 import components.RoundButton;
+import utils.InvalidPasswordException;
+import utils.InvalidUserException;
 
 @SuppressWarnings("serial")
 public class LoginView extends JPanel {
@@ -182,73 +184,140 @@ public class LoginView extends JPanel {
     	txtEmail.getDocument().addDocumentListener(new DocumentListener() {
     		@Override
     		public void removeUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+					verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     		
     		@Override
     		public void insertUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+    				verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     		
     		@Override
     		public void changedUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+    				verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     	});
     	
     	txtPassword.getDocument().addDocumentListener(new DocumentListener() {
     		@Override
     		public void removeUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+    				verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     		
     		@Override
     		public void insertUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+    				verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     		
     		@Override
     		public void changedUpdate(DocumentEvent e) {
-    			verification();
+    			try {
+					verificateUser();
+				} catch (InvalidUserException e1) {
+					System.out.println(e1.getMessage());
+				}
+    			try {
+    				verificatePassword();
+				} catch (InvalidPasswordException e1) {
+					System.out.println(e1.getMessage());
+				}
     		}
     	});
     }
     
-    private boolean verification() {
-    	int cont = 0;
-		// EMAIL
+    private boolean verificateUser() throws InvalidUserException{
 		if(txtEmail.getText().trim().isEmpty()) {
 			lblEmailError.setText("An e-mail is required.");
+			throw new InvalidUserException();
+		}
+		else if(!(txtEmail.getText().equals("memo61@mangos.com"))) {
+			lblEmailError.setText("no existe");
+			throw new InvalidUserException();
 		}
 		else {
 			lblEmailError.setText(" ");
-			cont++;
+			return true;
 		}
-		
-		// PASSWORD
-		if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
+    }
+    
+    private boolean verificatePassword() throws InvalidPasswordException{
+    	
+    	
+    	if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
 			lblPasswordError.setText("A password is required.");
+			throw new InvalidPasswordException();
 		}
+    	
+    	else if(!(String.valueOf(txtPassword.getPassword()).equals("67"))) {
+    	    lblPasswordError.setText("mal");
+    	    throw new InvalidPasswordException();
+    	}
 		else {
 			lblPasswordError.setText(" ");
-			cont++;
+			return true;
 		}
-		
-    	if(cont == 2) {
-    		return true;
-    	}
-    	else {
-    		return false;
-    	}
     }
     
     private void handleRegistration() {
-    	if(verification()) {
-    		JOptionPane.showMessageDialog(null, "Login successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
-    		
-    		new Dashboard();
-    		window.dispose();
-    	}
+		try {
+			if(verificateUser() && verificatePassword()) {
+				JOptionPane.showMessageDialog(null, "Login successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
+					
+				new Dashboard();
+				window.dispose();
+			}
+		} catch (HeadlessException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidUserException e) {
+			System.out.println(e.getMessage());
+		} catch (InvalidPasswordException e) {
+			System.out.println(e.getMessage());
+		}
     }
     
     private void createRightPanel() {
