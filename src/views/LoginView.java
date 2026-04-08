@@ -286,8 +286,6 @@ public class LoginView extends JPanel {
     }
     
     private boolean verificatePassword() throws InvalidPasswordException{
-    	
-    	
     	if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
 			lblPasswordError.setText("A password is required.");
 			throw new InvalidPasswordException();
