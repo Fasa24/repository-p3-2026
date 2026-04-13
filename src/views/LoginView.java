@@ -1,338 +1,164 @@
 package views;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import utils.AppFont;
 
-import components.RoundButton;
-import utils.InvalidPasswordException;
-import utils.InvalidUserException;
-
-@SuppressWarnings("serial")
 public class LoginView extends JPanel {
-	LoginWindow window;
+	private LoginWindow window;
+
 	private JButton loginBtn;
 	private JTextField txtEmail;
 	private JPasswordField txtPassword;
 	private JLabel lblEmailError;
 	private JLabel lblPasswordError;
-	
-    public LoginView(LoginWindow window) {
-    	this.window = window;
-    	
-        setLayout(new BorderLayout(10, 10));
-        setOpaque(false);
-        createLeftPanel();
-        createRightPanel();
-   
-    }
+	private JLabel lblRegister;
 
-    private void createLeftPanel() {
-        JPanel panelLeft = new JPanel(new GridBagLayout());
-        panelLeft.setOpaque(false);
-        panelLeft.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
-        
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+	public LoginView(LoginWindow window) {
+		this.window = window;
 
-        addLogoAndWelcome(panelLeft, gbc);
-        addLoginFields(panelLeft, gbc);
-        addRegisterButton(panelLeft, gbc);
+		setLayout(new BorderLayout(10, 10));
+		setOpaque(false);
 
-        add(panelLeft, BorderLayout.WEST);
-    }
+		createLeftPanel();
+		createRightPanel();
+	}
 
-    private void addLogoAndWelcome(JPanel panelLeft, GridBagConstraints gbc) {
-        JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        panelNorth.setOpaque(false);
+	private void createLeftPanel() {
+		JPanel panelLeft = new JPanel(new GridBagLayout());
+		panelLeft.setOpaque(false);
+		panelLeft.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
-        Image scaledImage = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        JLabel lblLogo = new JLabel(new ImageIcon(scaledImage));
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel lblWelcome = new JLabel("WELCOME!");
-        lblWelcome.setFont(new Font("Roboto Mono", Font.BOLD, 26));
+		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+		panelNorth.setOpaque(false);
 
-        panelNorth.add(lblLogo);
-        panelNorth.add(lblWelcome);
+		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
+		Image scaled = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		JLabel lblLogo = new JLabel(new ImageIcon(scaled));
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panelLeft.add(panelNorth, gbc);
-    }
+		JLabel lblWelcome = new JLabel("WELCOME!");
+		lblWelcome.setFont(AppFont.title().deriveFont(26f));
 
-    private void addLoginFields(JPanel panelLeft, GridBagConstraints gbc) {
-        // E-MAIL
-        JLabel lblEmail = new JLabel("E-mail:");
-        lblEmail.setFont(new Font("Arial", Font.BOLD, 14));
-        txtEmail = new JTextField();
-        txtEmail.setFont(new Font("Arial", Font.PLAIN, 14));
+		panelNorth.add(lblLogo);
+		panelNorth.add(lblWelcome);
 
-        lblEmailError = new JLabel("An e-mail is required.");
-        lblEmailError.setForeground(Color.RED);
-        lblEmailError.setFont(new Font("Arial", Font.PLAIN, 13));
-        lblEmailError.setText(" ");
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panelLeft.add(panelNorth, gbc);
 
-        gbc.insets = new Insets(2, 2, 2, 2);
-        
-        // PASSWORD
-        JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setFont(new Font("Arial", Font.BOLD, 14));
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
+		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail.setFont(AppFont.normal());
 
-        lblPasswordError = new JLabel("A password is required.");
-        lblPasswordError.setForeground(Color.RED);
-        lblPasswordError.setFont(new Font("Arial", Font.PLAIN, 13));
-        lblPasswordError.setText(" ");
- 
-        // CHECKBOX
-        JCheckBox chkRememberEmail = new JCheckBox("Remember e-mail");
-        chkRememberEmail.setEnabled(true);
-        
-        assignListeners();
-        
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panelLeft.add(lblEmail, gbc);
+		txtEmail = new JTextField();
+		txtEmail.setPreferredSize(new Dimension(200, 30));
+		txtEmail.setFont(AppFont.normal());
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panelLeft.add(txtEmail, gbc);
+		lblEmailError = new JLabel(" ");
+		lblEmailError.setForeground(Color.RED);
+		lblEmailError.setFont(AppFont.small());
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        panelLeft.add(lblEmailError, gbc);
+		gbc.gridy = 1;
+		panelLeft.add(lblEmail, gbc);
 
-        panelLeft.add(Box.createVerticalStrut(15));
+		gbc.gridy = 2;
+		panelLeft.add(txtEmail, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        panelLeft.add(lblPassword, gbc);
+		gbc.gridy = 3;
+		panelLeft.add(lblEmailError, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 5;
-        panelLeft.add(txtPassword, gbc);
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(AppFont.normal());
 
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        panelLeft.add(lblPasswordError, gbc);
-        
-        gbc.gridx = 0;
-        gbc.gridy = 7;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelLeft.add(chkRememberEmail, gbc);
-    }
-    
-    private void addRegisterButton(JPanel panelLeft, GridBagConstraints gbc) {
-        JPanel panelSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        panelSouth.setOpaque(false);
+		txtPassword = new JPasswordField();
+		txtPassword.setPreferredSize(new Dimension(200, 30));
+		txtPassword.setFont(AppFont.normal());
 
-        JLabel lblRegister = new JLabel("No account? Create one.");
-        lblRegister.setFont(new Font("Arial", Font.BOLD, 11));
-        lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        lblRegister.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e ) {
-        		new FormularyRegistry();
-        		window.dispose();
-        	}
-        	
-        	public void mouseEntered(MouseEvent e) {
-        		lblRegister.setForeground(Color.GREEN);
-        	}
-        	
-        	public void mouseExited(MouseEvent e) {
-        		lblRegister.setForeground(Color.WHITE);
-        	}
-        });
+		lblPasswordError = new JLabel(" ");
+		lblPasswordError.setForeground(Color.RED);
+		lblPasswordError.setFont(AppFont.small());
 
-        loginBtn = new JButton("Login");
-        loginBtn.setForeground(Color.WHITE);
-        loginBtn.setBackground(new Color(0, 128, 0));
-        loginBtn.setFocusPainted(false);
-        loginBtn.setPreferredSize(new Dimension(100, 35));
-        loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        
-        loginBtn.addActionListener(e-> handleRegistration());
+		gbc.gridy = 4;
+		panelLeft.add(lblPassword, gbc);
 
-        panelSouth.add(lblRegister);
-        panelSouth.add(loginBtn);
+		gbc.gridy = 5;
+		panelLeft.add(txtPassword, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 8;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panelLeft.add(panelSouth, gbc);
-    }
-    
-    private void assignListeners() {
-    	txtEmail.getDocument().addDocumentListener(new DocumentListener() {
-    		@Override
-    		public void removeUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
+		gbc.gridy = 6;
+		panelLeft.add(lblPasswordError, gbc);
+
+		lblRegister = new JLabel("No account? Create one.");
+		lblRegister.setFont(AppFont.small());
+		lblRegister.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		gbc.gridy = 7;
+		panelLeft.add(lblRegister, gbc);
+
+		loginBtn = new JButton("Login");
+		loginBtn.setFont(AppFont.normal());
+		loginBtn.setForeground(Color.WHITE);
+		loginBtn.setBackground(new Color(0, 128, 0));
+		loginBtn.setFocusPainted(false);
+		loginBtn.setPreferredSize(new Dimension(120, 35));
+
+		gbc.gridy = 8;
+		panelLeft.add(loginBtn, gbc);
+
+		add(panelLeft, BorderLayout.WEST);
+	}
+
+	private void createRightPanel() {
+		JPanel panelRight = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				try {
+					Image img = ImageIO.read(new File("src/img/fruitPatternBg.jpg"));
+					g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+				} catch (IOException e) {
+					System.out.println("Image not found.");
 				}
-    			try {
-					verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    		
-    		@Override
-    		public void insertUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
-				}
-    			try {
-    				verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    		
-    		@Override
-    		public void changedUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
-				}
-    			try {
-    				verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    	});
-    	
-    	txtPassword.getDocument().addDocumentListener(new DocumentListener() {
-    		@Override
-    		public void removeUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
-				}
-    			try {
-    				verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    		
-    		@Override
-    		public void insertUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
-				}
-    			try {
-    				verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    		
-    		@Override
-    		public void changedUpdate(DocumentEvent e) {
-    			try {
-					verificateUser();
-				} catch (InvalidUserException e1) {
-					System.out.println(e1.getMessage());
-				}
-    			try {
-    				verificatePassword();
-				} catch (InvalidPasswordException e1) {
-					System.out.println(e1.getMessage());
-				}
-    		}
-    	});
-    }
-    
-    private boolean verificateUser() throws InvalidUserException{
-		if(txtEmail.getText().trim().isEmpty()) {
-			lblEmailError.setText("An e-mail is required.");
-			throw new InvalidUserException();
-		}
-		else if(!(txtEmail.getText().equals("memo61@mangos.com"))) {
-			lblEmailError.setText("no existe");
-			throw new InvalidUserException();
-		}
-		else {
-			lblEmailError.setText(" ");
-			return true;
-		}
-    }
-    
-    private boolean verificatePassword() throws InvalidPasswordException{
-    	if(String.valueOf(txtPassword.getPassword()).trim().isEmpty()) {
-			lblPasswordError.setText("A password is required.");
-			throw new InvalidPasswordException();
-		}
-    	
-    	else if(!(String.valueOf(txtPassword.getPassword()).equals("67"))) {
-    	    lblPasswordError.setText("mal");
-    	    throw new InvalidPasswordException();
-    	}
-		else {
-			lblPasswordError.setText(" ");
-			return true;
-		}
-    }
-    
-    private void handleRegistration() {
-		try {
-			if(verificateUser() && verificatePassword()) {
-				JOptionPane.showMessageDialog(null, "Login successful!", "eManza", JOptionPane.INFORMATION_MESSAGE);
-					
-				new Dashboard();
-				window.dispose();
 			}
-		} catch (HeadlessException e) {
-			System.out.println(e.getMessage());
-		} catch (InvalidUserException e) {
-			System.out.println(e.getMessage());
-		} catch (InvalidPasswordException e) {
-			System.out.println(e.getMessage());
-		}
-    }
-    
-    private void createRightPanel() {
-        JPanel panelRight = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                try {
-                    Image windowBackground = ImageIO.read(new File("src/img/fruitPatternBg.jpg"));
-                    g2.drawImage(windowBackground, 0, 0, getWidth(), getHeight(), this);
-                } catch (IOException ex) {
-                    System.out.println("File not found.");
-                }
-            }
-        };
-        panelRight.setOpaque(false);
-        add(panelRight, BorderLayout.CENTER);
-    }
+		};
+
+		panelRight.setOpaque(false);
+		add(panelRight, BorderLayout.CENTER);
+	}
+
+	public void setLoginListener(java.awt.event.ActionListener l) {
+		loginBtn.addActionListener(l);
+	}
+
+	public void setRegisterNavigation(java.awt.event.MouseListener l) {
+		lblRegister.addMouseListener(l);
+	}
+
+	public void addInputListeners(Runnable r) {
+		txtEmail.getDocument().addDocumentListener(new SimpleDocumentListener(r));
+		txtPassword.getDocument().addDocumentListener(new SimpleDocumentListener(r));
+	}
+
+	public String getEmail() { return txtEmail.getText(); }
+	public String getPassword() { return new String(txtPassword.getPassword()); }
+	public LoginWindow getWindow() { return window; }
+
+	public void setEmailError(String msg) {
+		lblEmailError.setText(msg == null ? " " : msg);
+	}
+
+	public void setPasswordError(String msg) {
+		lblPasswordError.setText(msg == null ? " " : msg);
+	}
+
+	public void clearErrors() {
+		setEmailError(null);
+		setPasswordError(null);
+	}
 }

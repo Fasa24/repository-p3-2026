@@ -1,21 +1,26 @@
 package models;
 
 public class User {
-	private String name;
-	private String email;
-	private String password;
-	private String address;
-	private String postalCode;
-	private String gender;
-	
-	private String[] data = new String[6];
-	
-	public User(String[] data) {
-		this.name = data[0];
-		this.email = data[1];
-		this.password = data[2];
-		this.address = data[3];
-		this.postalCode = data[4];
-		this.gender = data[5];
+	private String name, email, password, address, postalCode, gender;
+	private boolean termsAccepted;
+
+	public User(String name, String email, String password,
+	            String address, String postalCode,
+	            String gender, boolean termsAccepted) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.gender = gender;
+		this.termsAccepted = termsAccepted;
 	}
+
+	public String getName() { return name; }
+	public String getEmail() { return email; }
+	public String getPassword() { return password; }
+	public String getAddress() { return address; }
+	public String getPostalCode() { return postalCode; }
+	public String getGender() { return gender; }
+	public boolean isTermsAccepted() { return termsAccepted; }
 }

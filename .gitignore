@@ -10,3 +10,10 @@
 
 # Eclipse-specific
 .metadata/
+.classpath
+.project
+.settings/
+
+# IntelliJ-specific
+.idea/
+*.iml

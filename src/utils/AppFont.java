@@ -11,6 +11,7 @@ public class AppFont {
 					AppFont.class.getResourceAsStream("/fonts/RobotoMono-VariableFont_wght.ttf"));
 		} catch(Exception e) { base = new Font("Times New Roman", Font.PLAIN, 14); }
 	}
+	
 	public static Font normal() { return base.deriveFont(14f); }
 	public static Font small() { return base.deriveFont(12f); }
 	public static Font title() { return base.deriveFont(Font.BOLD, 20f); }	
