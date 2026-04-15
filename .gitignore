@@ -1,5 +1,6 @@
 # Compiled output
 /bin/
+/out/
 *.class
 
 # Logs

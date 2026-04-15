@@ -23,4 +23,29 @@ public class User {
 	public String getPostalCode() { return postalCode; }
 	public String getGender() { return gender; }
 	public boolean isTermsAccepted() { return termsAccepted; }
+
+	public String toCsv() {
+		return name + "," + email + "," + password + "," +
+				address + "," + postalCode + "," + gender + "," + termsAccepted;
+	}
+
+	public static User fromCsv(String csvLine) {
+		String[] data = csvLine.split(",");
+		return new User(
+				data[0], // name
+				data[1], // email
+				data[2], // password
+				data[3], // address
+				data[4], // postalCode
+				data[5], // gender
+				Boolean.parseBoolean(data[6]) // termsAccepted
+		);
+	}
+
+	@Override
+	public String toString() {
+		return "User: " + name + " (" + email + ")\n" +
+				"Address: " + address + ", PC: " + postalCode + "\n" +
+				"Gender: " + gender;
+	}
 }

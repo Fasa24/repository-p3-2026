@@ -5,7 +5,6 @@ import java.awt.*;
 
 import controllers.LoginController;
 import models.LoginModel;
-import utils.AppFont;
 
 public class LoginWindow extends JFrame {
 	public LoginWindow() {
