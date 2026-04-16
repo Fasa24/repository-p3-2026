@@ -5,13 +5,18 @@ import java.awt.*;
 import utils.AppFont;
 
 public class Dashboard extends JFrame {
-	private JMenuItem exit;
-	public JButton btnViewUsers;
+	private CardLayout cardLayout;
+	private JPanel container;
+	public JMenuItem exit;
+	public JButton btnHome, btnUsers;
+	public UsersView usersPanel;
+
+	public static final String HOME_VIEW = "HOME";
+	public static final String USERS_VIEW = "USERS";
 
 	public Dashboard() {
 		setTitle("eManza - Dashboard");
-		setSize(800, 500);
-		setResizable(false);
+		setSize(900, 600);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
@@ -19,40 +24,43 @@ public class Dashboard extends JFrame {
 	}
 
 	private void initializeUI() {
+		setLayout(new BorderLayout());
+
+		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
+		btnHome = new JButton("Home");
+		btnUsers = new JButton("See Users");
+		navbar.add(btnHome);
+		navbar.add(btnUsers);
+		add(navbar, BorderLayout.NORTH);
+
+		cardLayout = new CardLayout();
+		container = new JPanel(cardLayout);
+
+		JPanel homePanel = new JPanel(new GridBagLayout());
+		JLabel welcomeLabel = new JLabel("Welcome to the Dashboard!", SwingConstants.CENTER);
+		welcomeLabel.setFont(AppFont.title());
+		homePanel.add(welcomeLabel);
+
+		usersPanel = new UsersView();
+
+		container.add(homePanel, HOME_VIEW);
+		container.add(usersPanel, USERS_VIEW);
+
+		add(container, BorderLayout.CENTER);
+
+		setJMenuBar(createMenuBar());
+	}
+
+	private JMenuBar createMenuBar() {
 		JMenuBar mb = new JMenuBar();
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.setFont(AppFont.normal());
-
-		exit = new JMenuItem("Exit");
-		exit.setFont(AppFont.normal());
-
+		JMenu fileMenu = new JMenu("Session");
+		exit = new JMenuItem("Log out");
 		fileMenu.add(exit);
 		mb.add(fileMenu);
-		setJMenuBar(mb);
-
-		JPanel mainPanel = new JPanel(new BorderLayout(20, 20));
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-
-		JLabel label = new JLabel("Welcome to eManza Dashboard", SwingConstants.CENTER);
-		label.setFont(AppFont.title());
-		mainPanel.add(label, BorderLayout.CENTER);
-
-		btnViewUsers = new JButton("Consult registered users.");
-		btnViewUsers.setFont(AppFont.normal());
-		btnViewUsers.setPreferredSize(new Dimension(300, 40));
-
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		buttonPanel.add(btnViewUsers);
-		mainPanel.add(buttonPanel, BorderLayout.SOUTH);
-
-		add(mainPanel);
+		return mb;
 	}
 
-	public void setExitListener(java.awt.event.ActionListener l) {
-		if (exit != null) {
-			exit.addActionListener(l);
-		}
+	public void showView(String viewName) {
+		cardLayout.show(container, viewName);
 	}
-
-	public void showWindow() { setVisible(true); }
 }

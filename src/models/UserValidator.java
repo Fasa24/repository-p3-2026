@@ -11,7 +11,7 @@ public class UserValidator {
             errors.put("name", "Name is required.");
 
         if (user.getEmail().trim().isEmpty())
-            errors.put("email", "Email is required.");
+            errors.put("email", "E-mail is required.");
 
         if (user.getPassword().trim().isEmpty())
             errors.put("password", "Password is required.");

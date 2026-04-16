@@ -1,13 +1,13 @@
 package controllers;
 
-import models.User;
-import repository.UserRepository;
-import views.Dashboard;
-import views.LoginWindow;
-
-import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JOptionPane;
+import models.User;
+import repository.UserRepository;
+import tablemodels.UserTableModel;
+import views.Dashboard;
+import views.LoginWindow;
 
 public class DashboardController {
 	private Dashboard view;
@@ -20,36 +20,25 @@ public class DashboardController {
 	}
 
 	public void init() {
-		view.setExitListener(e -> exitToLogin());
-		view.btnViewUsers.addActionListener(e -> listUsers());
-		view.showWindow();
+		view.exit.addActionListener(e -> exitToLogin());
+		view.btnHome.addActionListener(e -> view.showView(Dashboard.HOME_VIEW));
+		view.btnUsers.addActionListener(e -> loadUserTable());
+		view.setVisible(true);
 	}
 
-	private void listUsers() {
+	private void loadUserTable() {
 		try {
 			List<User> users = repository.getUsers();
-			if (users.isEmpty()) {
-				JOptionPane.showMessageDialog(view, "There are no registered users yet.");
-				return;
-			}
-
-			System.out.println("=== LIST OF REGISTERED USERS ===");
-			for (User u : users) {
-				System.out.println(u);
-				System.out.println("------------------------------------");
-			}
-			JOptionPane.showMessageDialog(view, "List sent to the system console.");
-
+			UserTableModel model = new UserTableModel(users);
+			view.usersPanel.setTableModel(model);
+			view.showView(Dashboard.USERS_VIEW);
 		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(view, "ERROR reading users: " + ex.getMessage());
+			JOptionPane.showMessageDialog(view, "Error loading CSV: " + ex.getMessage());
 		}
 	}
 
 	private void exitToLogin() {
-		int option = JOptionPane.showConfirmDialog(
-				view, "Do you want to return to login?",
-				"Exit Dashboard", JOptionPane.YES_NO_OPTION);
-
+		int option = JOptionPane.showConfirmDialog(view, "Are you sure you want to close the session?", "Exit", JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			view.dispose();
 			new LoginWindow();

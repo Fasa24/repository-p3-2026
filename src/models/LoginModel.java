@@ -2,8 +2,8 @@ package models;
 
 public class LoginModel {
     public boolean authenticate(String email, String password) {
-        return email.equals("memo61@mangos.com") &&
-                password.equals("67");
+        return email.equals("enter@mail.com") &&
+                password.equals("12");
     }
 
     public String validateEmail(String email) {

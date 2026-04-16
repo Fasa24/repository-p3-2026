@@ -44,8 +44,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User: " + name + " (" + email + ")\n" +
-				"Address: " + address + ", PC: " + postalCode + "\n" +
+		return "Name: " + name + " (" + email + ")\n" +
+				"Address: " + address + ", P.C.: " + postalCode + "\n" +
 				"Gender: " + gender;
 	}
 }
