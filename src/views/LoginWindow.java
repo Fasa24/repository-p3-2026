@@ -17,7 +17,7 @@ public class LoginWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
-		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
+		ImageIcon icon = new ImageIcon("src/img/appleLogo.png");
 		setIconImage(icon.getImage());
 
 		LoginView view = new LoginView(this);

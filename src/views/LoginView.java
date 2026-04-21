@@ -50,11 +50,11 @@ public class LoginView extends JPanel {
 		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		panelNorth.setOpaque(false);
 
-		ImageIcon icon = new ImageIcon("src/img/appleLogo.jpg");
+		ImageIcon icon = new ImageIcon("src/img/appleLogo.png");
 		Image scaled = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		JLabel lblLogo = new JLabel(new ImageIcon(scaled));
 
-		JLabel lblWelcome = new JLabel("WELCOME!");
+		JLabel lblWelcome = new JLabel("Greetings!");
 		lblWelcome.setFont(AppFont.title().deriveFont(26f));
 
 		panelNorth.add(lblLogo);

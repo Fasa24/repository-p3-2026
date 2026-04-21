@@ -5,13 +5,14 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JFrame;
 
-import com.formdev.flatlaf.FlatDarkLaf;
+// import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
 import views.LoginWindow;
 
 public class Main {
 	public static void main(String[] args) {
-		FlatDarkLaf.setup();
+		FlatMacDarkLaf.setup();
 		LoginWindow loginWindow = new LoginWindow();
 		showOnScreen(0, loginWindow);
 	}
