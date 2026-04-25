@@ -41,4 +41,13 @@ public class UserTableModel extends AbstractTableModel {
             default: return null;
         }
     }
+
+    public User getUserAt(int row) {
+        return users.get(row);
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+        fireTableDataChanged();
+    }
 }

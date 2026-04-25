@@ -1,5 +1,7 @@
 package controllers;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -12,6 +14,7 @@ import views.LoginWindow;
 public class DashboardController {
 	private Dashboard view;
 	private UserRepository repository;
+	private UserController userController;
 
 	public DashboardController(Dashboard view) {
 		this.view = view;
@@ -21,8 +24,16 @@ public class DashboardController {
 
 	public void init() {
 		view.exit.addActionListener(e -> exitToLogin());
-		view.btnHome.addActionListener(e -> view.showView(Dashboard.HOME_VIEW));
-		view.btnUsers.addActionListener(e -> loadUserTable());
+		view.btnHome.addActionListener(e -> {
+			view.showView(Dashboard.HOME_VIEW);
+			updateMenuState(Dashboard.HOME_VIEW);
+		});
+
+		view.btnUsers.addActionListener(e -> {
+			showUsers();
+			updateMenuState(Dashboard.USERS_VIEW);
+		});
+
 		view.setVisible(true);
 	}
 
@@ -43,5 +54,47 @@ public class DashboardController {
 			view.dispose();
 			new LoginWindow();
 		}
+	}
+
+	public void registerListeners( ) {
+
+		view.exit.addActionListener(e -> handleClose());
+
+		view.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				handleClose();
+			}
+		});
+
+		view.btnUsers.addActionListener(e -> {
+			showUsers();
+		});
+
+		view.btnHome.addActionListener(e -> {
+			view.showView(Dashboard.HOME_VIEW);
+			updateMenuState(Dashboard.HOME_VIEW);
+		});
+
+	}
+
+	private void showUsers() {
+		if(userController == null) {
+			userController = new UserController(view.usersPanel);
+		}
+
+		userController.loadUsers();
+
+		view.showView(Dashboard.USERS_VIEW);
+		updateMenuState(Dashboard.USERS_VIEW);
+
+	}
+
+	private void handleClose() {
+		view.dispose();
+	}
+	private void updateMenuState(String viewName) {
+		view.btnUsers.setEnabled(!viewName.equals(Dashboard.USERS_VIEW));
+		view.btnHome.setEnabled(!viewName.equals(Dashboard.HOME_VIEW));
 	}
 }

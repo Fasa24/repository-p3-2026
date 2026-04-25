@@ -62,4 +62,21 @@ public class UserRepository {
         }
         return users;
     }
+
+    public void updateAll(List<User> users) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(FILE_PATH), StandardCharsets.UTF_8))) {
+
+            for (User user : users) {
+                writer.write(user.toCsv());
+                writer.newLine();
+            }
+        }
+    }
+
+    public void update(int index, User updatedUser) throws IOException {
+        List<User> users = getUsers();
+        users.set(index, updatedUser);
+        updateAll(users);
+    }
 }
