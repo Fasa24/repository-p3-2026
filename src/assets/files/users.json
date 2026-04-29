@@ -1,0 +1,9 @@
+[ {
+  "name" : "mochopepe",
+  "email" : "mocho@mail.com",
+  "password" : "777",
+  "address" : "mi casa",
+  "postalCode" : "1241",
+  "gender" : "Male",
+  "termsAccepted" : true
+} ]

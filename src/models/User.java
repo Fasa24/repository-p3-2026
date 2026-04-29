@@ -1,12 +1,21 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
 	private String name, email, password, address, postalCode, gender;
 	private boolean termsAccepted;
 
-	public User(String name, String email, String password,
-	            String address, String postalCode,
-	            String gender, boolean termsAccepted) {
+	@JsonCreator
+	public User(
+			@JsonProperty("name")          String name,
+			@JsonProperty("email")         String email,
+			@JsonProperty("password")      String password,
+			@JsonProperty("address")       String address,
+			@JsonProperty("postalCode")    String postalCode,
+			@JsonProperty("gender")        String gender,
+			@JsonProperty("termsAccepted") boolean termsAccepted) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
@@ -32,12 +41,20 @@ public class User {
 	public boolean isTermsAccepted() { return termsAccepted; }
 
 	public String toCsv() {
-		return name + "," + email + "," + password + "," +
-				address + "," + postalCode + "," + gender + "," + termsAccepted;
+		return name + ";" + email + ";" + password + ";" +
+				address + ";" + postalCode + ";" + gender + ";" + termsAccepted;
 	}
 
 	public static User fromCsv(String csvLine) {
-		String[] data = csvLine.split(",");
+		if (csvLine == null || csvLine.isBlank()) return null;
+
+		String[] data = csvLine.split(";");
+
+		if (data.length < 7) {
+			System.err.println("Línea CSV inválida (faltan campos): " + csvLine);
+			return null;
+		}
+
 		return new User(
 				data[0], // name
 				data[1], // email
