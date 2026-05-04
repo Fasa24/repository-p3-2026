@@ -3,56 +3,56 @@ package controllers;
 import models.User;
 import models.UserValidator;
 import repository.UserRepository;
+import services.PDFExporter;
 import tablemodels.UserTableModel;
-import views.Dashboard;
 import views.UserFormDialog;
 import views.UsersView;
 
 import javax.swing.*;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class UserController {
-
     private UsersView view;
     private UserRepository repo;
     private UserTableModel model;
+    private PDFExporter pdfExporter;
 
     public UserController(UsersView view) {
         this.view = view;
         repo = new UserRepository();
+        pdfExporter = new PDFExporter();
 
-        this.view.getBtnAdd().addActionListener(e -> {
-            openForm(null);
-        });
+        view.getBtnAdd().addActionListener(e -> openForm(null));
 
-        this.view.getBtnEdit().addActionListener(e -> {
+        view.getBtnEdit().addActionListener(e -> {
             int row = view.getSelectedRow();
-            if(row == -1) {
+            if (row == -1) {
                 JOptionPane.showMessageDialog(view, "Select a user first.");
                 return;
             }
-
             openForm(model.getUserAt(row));
         });
 
-        this.view.getBtnDelete().addActionListener(e -> deleteUser());
-
+        view.getBtnDelete().addActionListener(e -> deleteUser());
+        view.getBtnPdf().addActionListener(e -> generatePdf());
     }
 
     public void loadUsers() {
         try {
             List<User> users = repo.getUsers();
 
-            if(model == null) {
+            if (model == null) {
                 model = new UserTableModel(users);
                 view.setTableModel(model);
-            }else {
+            } else {
                 model.setUsers(users);
             }
 
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage());
         }
     }
@@ -70,8 +70,6 @@ public class UserController {
                 dialog.showErrors(errors);
                 return;
             }
-
-            dialog.clearErrors();
 
             try {
                 if (user == null) {
@@ -100,8 +98,8 @@ public class UserController {
 
         int confirm = JOptionPane.showConfirmDialog(
                 view,
-                "Are you sure you want to delete this user?",
-                "Confirm Delete",
+                "Are you sure?",
+                "Confirm",
                 JOptionPane.YES_NO_OPTION
         );
 
@@ -117,4 +115,21 @@ public class UserController {
         }
     }
 
+    private void generatePdf() {
+        File file = view.selectPdfFile();
+
+        if (file == null) return;
+
+        try {
+            pdfExporter.exportUsers(repo.getUsers(), file);
+
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(file);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(view, "Error exporting PDF");
+        }
+    }
 }
