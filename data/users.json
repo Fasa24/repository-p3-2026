@@ -1,0 +1,17 @@
+[ {
+  "name" : "Guillermo",
+  "email" : "guillermo@mail.com",
+  "password" : "123",
+  "address" : "Calle 1",
+  "postalCode" : "4125",
+  "gender" : "Male",
+  "termsAccepted" : true
+}, {
+  "name" : "Fasa",
+  "email" : "fasa@mail.com",
+  "password" : "123",
+  "address" : "Calle 2",
+  "postalCode" : "7184",
+  "gender" : "Male",
+  "termsAccepted" : true
+} ]

@@ -60,6 +60,18 @@ public class Dashboard extends JFrame {
 		return mb;
 	}
 
+	/*
+	public void setWindowSize(int width, int height) {
+		setSize(width, height);
+	}
+	 */
+
+	/*
+	public void setWindowLocation(int x, int y) {
+		setLocation(x, y);
+	}
+	 */
+
 	public void showView(String viewName) {
 		cardLayout.show(container, viewName);
 	}

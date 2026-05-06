@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -10,6 +11,8 @@ import repository.UserRepository;
 import tablemodels.UserTableModel;
 import views.Dashboard;
 import views.LoginWindow;
+import javax.swing.JFrame;
+import utils.Config;
 
 public class DashboardController {
 	private Dashboard view;
@@ -19,6 +22,9 @@ public class DashboardController {
 	public DashboardController(Dashboard view) {
 		this.view = view;
 		this.repository = new UserRepository();
+
+		//loadWindowPreferences();
+
 		init();
 	}
 
@@ -93,8 +99,59 @@ public class DashboardController {
 	private void handleClose() {
 		view.dispose();
 	}
+
 	private void updateMenuState(String viewName) {
 		view.btnUsers.setEnabled(!viewName.equals(Dashboard.USERS_VIEW));
 		view.btnHome.setEnabled(!viewName.equals(Dashboard.HOME_VIEW));
 	}
+
+	/*
+	private void saveWindowPreferences() {
+		Dimension size = view.getSize();
+		Point point = view.getLocation();
+
+		Config.set("registration.window.width",
+				String.valueOf(size.width));
+
+		Config.set("registration.window.height",
+				String.valueOf(size.height));
+
+		Config.set("registration.window.x",
+				String.valueOf(point.x));
+
+		Config.set("registration.window.y",
+				String.valueOf(point.y));
+
+	}
+
+	 */
+
+	/*
+	private void loadWindowPreferences()
+	{
+		int width = Integer.parseInt(
+				Config.get("registration.window.width"
+						, "500"));
+
+		int height = Integer.parseInt(
+				Config.get("registration.window.height"
+						, "500"));
+
+		String xValue = Config.get("registration.window.x"
+				, "");
+
+		String yValue = Config.get("registration.window.y"
+				, "");
+
+		if(!xValue.isBlank() && !yValue.isBlank()) {
+			view.setWindowLocation(Integer.parseInt(xValue), Integer.parseInt(yValue));
+		}else {
+			view.setLocationRelativeTo(null);
+		}
+
+		view.setWindowSize(width, height);
+	}
+
+	 */
+
 }

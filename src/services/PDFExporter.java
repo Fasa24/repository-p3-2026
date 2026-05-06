@@ -23,11 +23,11 @@ public class PDFExporter {
                     .setBold()
                     .setTextAlignment(TextAlignment.CENTER));
 
-            float[] cols = {1, 3, 3, 2, 3};
+            float[] cols = {2, 3, 3, 2, 1};
             Table table = new Table(UnitValue.createPercentArray(cols))
                     .useAllAvailableWidth();
 
-            String[] headers = {"#", "Name", "Email"};
+            String[] headers = {"Name", "Email",  "Address", "P.C.", "Gender"};
 
             for (String h : headers) {
                 table.addHeaderCell(new Cell()
@@ -36,11 +36,14 @@ public class PDFExporter {
                         .setTextAlignment(TextAlignment.CENTER));
             }
 
-            int i = 1;
+            int i = 0;
             for (User u : users) {
-                table.addCell(String.valueOf(i++));
+                //table.addCell(String.valueOf(i++));
                 table.addCell(u.getName());
                 table.addCell(u.getEmail());
+                table.addCell(u.getAddress());
+                table.addCell(u.getPostalCode());
+                table.addCell(u.getGender());
             }
 
             doc.add(table);
