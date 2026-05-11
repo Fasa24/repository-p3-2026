@@ -1,0 +1,25 @@
+[ {
+  "name" : "mochopepe",
+  "email" : "mocho@mail.com",
+  "password" : "777",
+  "address" : "mi casa",
+  "postalCode" : "1241",
+  "gender" : "Male",
+  "termsAccepted" : true
+}, {
+  "name" : "fasa",
+  "email" : "nigga@mail.com",
+  "password" : "12",
+  "address" : "tu casa",
+  "postalCode" : "14267",
+  "gender" : "Other",
+  "termsAccepted" : true
+}, {
+  "name" : "pepillo",
+  "email" : "oisvndwoiesdng",
+  "password" : "lkasfkniqwiof",
+  "address" : "askvnoi;asvn ",
+  "postalCode" : "dsvl214124",
+  "gender" : "Male",
+  "termsAccepted" : true
+} ]

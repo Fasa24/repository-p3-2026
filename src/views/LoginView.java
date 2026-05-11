@@ -24,7 +24,7 @@ public class LoginView extends JPanel {
 	private final Border focusBorder = new RoundedBorder(10, new Color(65, 116, 255), 3f);
 	private final Border errorBorder = new RoundedBorder(10, Color.RED, 2f);
 
-	private final ImageIcon warningIcon = ScaleIcon.scale("src/img/warningIcon.png", 16, 16);
+	private final ImageIcon warningIcon = ScaleIcon.scale("src/resources/img/warningIcon.png", 16, 16);
 	private Image background;
 
 	public LoginView(LoginWindow window) {
@@ -50,7 +50,7 @@ public class LoginView extends JPanel {
 		JPanel panelNorth = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		panelNorth.setOpaque(false);
 
-		ImageIcon icon = new ImageIcon("src/img/appleLogo.png");
+		ImageIcon icon = new ImageIcon("src/resources/img/appleLogo.png");
 		Image scaled = icon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		JLabel lblLogo = new JLabel(new ImageIcon(scaled));
 
@@ -148,7 +148,7 @@ public class LoginView extends JPanel {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				try {
-					background = ImageIO.read(new File("src/img/fruitPatternBg.jpg"));
+					background = ImageIO.read(new File("src/resources/img/fruitPatternBg.jpg"));
 					g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
 				} catch (IOException e) {
 					System.out.println("Image not found.");

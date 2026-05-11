@@ -31,7 +31,7 @@ public class FormularyRegistry extends JFrame {
 	private final Border focusBorder = new RoundedBorder(10, new Color(65, 116, 255), 3f);
 	private final Border errorBorder = new RoundedBorder(10, Color.RED, 3f);
 
-	private final ImageIcon warningIcon = ScaleIcon.scale("src/img/warningIcon.png", 16, 16);
+	private final ImageIcon warningIcon = ScaleIcon.scale("src/resources/img/warningIcon.png", 16, 16);
 
 	public FormularyRegistry() {
 		setSize(400, 700);
