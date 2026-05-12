@@ -5,7 +5,8 @@
   "address" : "Calle 1",
   "postalCode" : "4125",
   "gender" : "Male",
-  "termsAccepted" : true
+  "termsAccepted" : true,
+  "id" : 0
 }, {
   "name" : "Fasa",
   "email" : "fasa@mail.com",
@@ -13,5 +14,24 @@
   "address" : "Calle 2",
   "postalCode" : "7184",
   "gender" : "Male",
-  "termsAccepted" : true
+  "termsAccepted" : true,
+  "id" : 0
+}, {
+  "name" : "mochopepe123",
+  "email" : "mocho@gmail.com",
+  "password" : "12",
+  "address" : "123",
+  "postalCode" : "123",
+  "gender" : "Male",
+  "termsAccepted" : true,
+  "id" : 0
+}, {
+  "name" : "mocho",
+  "email" : "mocho",
+  "password" : "mocho",
+  "address" : "mocho",
+  "postalCode" : "mocho",
+  "gender" : "Male",
+  "termsAccepted" : true,
+  "id" : 0
 } ]

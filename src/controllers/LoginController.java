@@ -1,60 +1,114 @@
 package controllers;
 
-import models.LoginModel;
-import views.*;
-import main.AppNavigator;
-
-import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import models.LoginModel;
+import models.User;
+import repository.LoginRepository;
+import views.LoginView;
+import main.AppNavigator;
+
 public class LoginController {
+
 	private LoginView view;
 	private LoginModel model;
+	private LoginRepository repository;
 
 	public LoginController(LoginView view, LoginModel model) {
 		this.view = view;
 		this.model = model;
+		this.repository = new LoginRepository();
 		init();
 	}
 
 	private void init() {
-		view.setLoginListener(e -> login());
+		view.setLoginListener(e -> handleLogin());
 
 		view.setRegisterNavigation(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) { goRegister(); }
+			public void mouseClicked(MouseEvent e) {
+				handleRegistration();
+			}
 		});
+
 		view.addInputListeners(() -> validateLive());
+
+		KeyAdapter enterListener = new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					handleLogin();
+				}
+			}
+		};
+
+		view.getEmailField().addKeyListener(enterListener);
+		view.getPasswordField().addKeyListener(enterListener);
 	}
 
-	private void login() {
-		String email = view.getEmail();
-		String password = view.getPassword();
-
+	private boolean validateCredentials(String email, String password) {
 		view.clearErrors();
+
+		boolean valid = true;
 
 		String emailError = model.validateEmail(email);
 		String passwordError = model.validatePassword(password);
 
-		if (emailError != null) view.setEmailError(emailError);
-		if (passwordError != null) view.setPasswordError(passwordError);
-
-		if (emailError == null && passwordError == null) {
-			if (model.authenticate(email, password)) {
-				JOptionPane.showMessageDialog(view, "Login successful!");
-				AppNavigator.openDashboard(view.getWindow());
-			} else {
-				view.setEmailError("Invalid credentials!");
-				view.setPasswordError("Invalid credentials!");
-			}
+		if (email.trim().isEmpty()) {
+			view.setEmailError("El correo es obligatorio");
+			valid = false;
+		} else if (emailError != null) {
+			view.setEmailError(emailError);
+			valid = false;
 		}
+
+		if (password.trim().isEmpty()) {
+			view.setPasswordError("La contraseña es obligatoria");
+			valid = false;
+		} else if (passwordError != null) {
+			view.setPasswordError(passwordError);
+			valid = false;
+		}
+
+		return valid;
+	}
+
+	private void handleLogin() {
+		String email = view.getEmail();
+		String password = view.getPassword();
+
+		if (!validateCredentials(email, password)) {
+			return;
+		}
+
+		User user = repository.login(email, password);
+
+		if (user == null) {
+			view.setPasswordError("Credenciales incorrectas");
+			return;
+		}
+
+		JOptionPane.showMessageDialog(
+				view.getWindow(),
+				"Se inició la sesión",
+				"Sesión iniciada",
+				JOptionPane.INFORMATION_MESSAGE
+		);
+
+		AppNavigator.openDashboard(view.getWindow());
+	}
+
+	private void handleRegistration() {
+		AppNavigator.openRegister(view.getWindow());
 	}
 
 	private void validateLive() {
 		view.setEmailError(model.validateEmail(view.getEmail()));
 		view.setPasswordError(model.validatePassword(view.getPassword()));
 	}
-
-	private void goRegister() { AppNavigator.openRegister(view.getWindow()); }
 }

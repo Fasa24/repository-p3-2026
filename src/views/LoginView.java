@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+
 import components.*;
 import utils.AppFont;
 
@@ -246,4 +247,7 @@ public class LoginView extends JPanel {
 			}
 		});
 	}
+
+	public RoundedField getEmailField() { return txtEmail; }
+	public RoundedPasswordField getPasswordField() { return txtPassword; }
 }

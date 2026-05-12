@@ -8,6 +8,7 @@ import components.*;
 import models.User;
 import java.util.Map;
 import utils.AppFont;
+import config.Config;
 
 public class FormularyRegistry extends JFrame {
 	private RoundedButton createBtn, returnBtn;

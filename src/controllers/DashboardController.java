@@ -12,7 +12,7 @@ import tablemodels.UserTableModel;
 import views.Dashboard;
 import views.LoginWindow;
 import javax.swing.JFrame;
-import utils.Config;
+import config.Config;
 
 public class DashboardController {
 	private Dashboard view;

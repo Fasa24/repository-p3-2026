@@ -9,7 +9,7 @@ import javax.swing.table.JTableHeader;
 
 import tablemodels.UserTableModel;
 import utils.AppFont;
-import utils.Config;
+import config.Config;
 
 public class UsersView extends JPanel {
     private JTable table;

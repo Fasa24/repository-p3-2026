@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
+	private int id;
 	private String name, email, password, address, postalCode, gender;
 	private boolean termsAccepted;
 
@@ -23,6 +24,16 @@ public class User {
 		this.postalCode = postalCode;
 		this.gender = gender;
 		this.termsAccepted = termsAccepted;
+	}
+
+	public User(){
+
+	}
+
+	public User(int id, String email, String password) {
+		this.id = id;
+		this.email = email;
+		this.password = password;
 	}
 
 	public void setName(String name) { this.name = name; }
@@ -72,4 +83,14 @@ public class User {
 				"Address: " + address + ", P.C.: " + postalCode + "\n" +
 				"Gender: " + gender;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
 }
