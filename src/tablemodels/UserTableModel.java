@@ -50,4 +50,20 @@ public class UserTableModel extends AbstractTableModel {
         this.users = users;
         fireTableDataChanged();
     }
+
+    public void removeRow(int row) {
+        users.remove(row);
+        fireTableRowsDeleted(row, row);
+    }
+
+    public void addRow(User user) {
+        int row = users.size();
+        users.add(user);
+        fireTableRowsInserted(row, row);
+    }
+
+    public void updateRow(int row, User user) {
+        users.set(row, user);
+        fireTableRowsUpdated(row, row);
+    }
 }

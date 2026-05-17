@@ -2,6 +2,8 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+
+import models.User;
 import utils.AppFont;
 
 public class Dashboard extends JFrame {
@@ -10,6 +12,7 @@ public class Dashboard extends JFrame {
 	public JMenuItem exit;
 	public JButton btnHome, btnUsers;
 	public UsersView usersPanel;
+	private User user;
 
 	public static final String HOME_VIEW = "HOME";
 	public static final String USERS_VIEW = "USERS";

@@ -37,7 +37,15 @@ public class UserController {
             openForm(model.getUserAt(row));
         });
 
-        view.getBtnDelete().addActionListener(e -> deleteUser());
+        view.getBtnDelete().addActionListener(e -> {
+            boolean deleted = repo.delete(model.getUserAt(view.getSelectedRow()).getId());
+            if(deleted) {
+                //Eliminamos de la tabla
+                //TODO: Eliminar una sola fila
+                model.removeRow(view.getSelectedRow());
+            }
+
+        });
         view.getBtnPdf().addActionListener(e -> generatePdf());
     }
 
@@ -74,10 +82,17 @@ public class UserController {
             try {
                 if (user == null) {
                     repo.save(formUser);
+                    model.addRow(formUser);
                 } else {
-                    repo.update(view.getSelectedRow(), formUser);
+                    int row = view.getSelectedRow();
+                    formUser.setId(user.getId());
+                    formUser.setRole(user.getRole());
+                    boolean updated = repo.update(row, formUser);
+                    if(updated) {
+                        model.updateRow(row, formUser);
+                    }
                 }
-                loadUsers();
+
                 dialog.dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, ex.getMessage());
@@ -108,7 +123,7 @@ public class UserController {
         try {
             List<User> users = repo.getUsers();
             users.remove(row);
-            repo.updateAll(users);
+
             loadUsers();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage());

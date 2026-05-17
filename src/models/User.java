@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 	private int id;
-	private String name, email, password, address, postalCode, gender;
+	private String name, email, password, address, postalCode, gender, role;
 	private boolean termsAccepted;
 
 	@JsonCreator
@@ -36,12 +36,55 @@ public class User {
 		this.password = password;
 	}
 
+	public User(
+			String name,
+			String email,
+			String password,
+			String address,
+			String postalCode,
+			String gender,
+			String role,
+			boolean termsAccepted
+	) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.gender = gender;
+		this.role = role;
+		this.termsAccepted = termsAccepted;
+	}
+
+	public User(
+			int id,
+			String name,
+			String email,
+			String password,
+			String address,
+			String postalCode,
+			String gender,
+			String role,
+			boolean termsAccepted
+	) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.postalCode = postalCode;
+		this.gender = gender;
+		this.role = role;
+		this.termsAccepted = termsAccepted;
+	}
+
 	public void setName(String name) { this.name = name; }
 	public void setEmail(String email) { this.email = email; }
 	public void setPassword(String password) { this.password = password; }
 	public void setAddress(String address) { this.address = address; }
 	public void setPostalCode(String postalCode) { this.postalCode = postalCode; }
 	public void setGender(String gender) { this.gender = gender; }
+	public void setRole(String role) { this.role = role; }
 
 	public String getName() { return name; }
 	public String getEmail() { return email; }
@@ -49,6 +92,7 @@ public class User {
 	public String getAddress() { return address; }
 	public String getPostalCode() { return postalCode; }
 	public String getGender() { return gender; }
+	public String getRole() { return role; }
 	public boolean isTermsAccepted() { return termsAccepted; }
 
 	public String toCsv() {

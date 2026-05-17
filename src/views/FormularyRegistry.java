@@ -218,6 +218,7 @@ public class FormularyRegistry extends JFrame {
 				textArea.getText(),
 				txtPc.getText(),
 				(String) genderComboBox.getSelectedItem(),
+				"ADMIN",
 				cbTerms.isSelected()
 		);
 	}

@@ -387,7 +387,7 @@ public class UserFormDialog extends JDialog {
         String gender = (String) genderComboBox.getSelectedItem();
 
         if(user == null) {
-            user = new User(name, email, password, address, postalCode, gender, true);
+            user = new User(name, email, password, address, postalCode, gender, "ADMIN", true);
         }else {
             user.setName(name);
             user.setEmail(email);

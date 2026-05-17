@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import models.LoginModel;
 import models.User;
 import repository.LoginRepository;
+import utils.Session;
+import views.Dashboard;
 import views.LoginView;
 import main.AppNavigator;
 
@@ -93,14 +95,27 @@ public class LoginController {
 			return;
 		}
 
+		Session.login(user);
+
+		/*
 		JOptionPane.showMessageDialog(
 				view.getWindow(),
 				"Se inició la sesión",
 				"Sesión iniciada",
 				JOptionPane.INFORMATION_MESSAGE
 		);
+		 */
 
-		AppNavigator.openDashboard(view.getWindow());
+		if(Session.getRole().equals("ADMIN")) {
+			new DashboardController(new Dashboard());
+
+		}else {
+			JOptionPane.showMessageDialog(view.getWindow(), "No tienes permisos");
+		}
+
+		view.getWindow().dispose();
+
+		//AppNavigator.openDashboard(view.getWindow());
 	}
 
 	private void handleRegistration() {
