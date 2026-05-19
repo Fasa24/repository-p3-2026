@@ -62,7 +62,7 @@ public class LoginController {
 		String passwordError = model.validatePassword(password);
 
 		if (email.trim().isEmpty()) {
-			view.setEmailError("El correo es obligatorio");
+			view.setEmailError("email is required");
 			valid = false;
 		} else if (emailError != null) {
 			view.setEmailError(emailError);
@@ -70,7 +70,7 @@ public class LoginController {
 		}
 
 		if (password.trim().isEmpty()) {
-			view.setPasswordError("La contraseña es obligatoria");
+			view.setPasswordError("Password is required");
 			valid = false;
 		} else if (passwordError != null) {
 			view.setPasswordError(passwordError);
@@ -91,7 +91,7 @@ public class LoginController {
 		User user = repository.login(email, password);
 
 		if (user == null) {
-			view.setPasswordError("Credenciales incorrectas");
+			view.setPasswordError("Incorrect credentials");
 			return;
 		}
 
@@ -106,13 +106,16 @@ public class LoginController {
 		);
 		 */
 
+		/*
 		if(Session.getRole().equals("ADMIN")) {
 			new DashboardController(new Dashboard());
 
 		}else {
 			JOptionPane.showMessageDialog(view.getWindow(), "No tienes permisos");
 		}
+		 */
 
+		new DashboardController(new Dashboard());
 		view.getWindow().dispose();
 
 		//AppNavigator.openDashboard(view.getWindow());

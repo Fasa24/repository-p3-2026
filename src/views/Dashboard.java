@@ -5,6 +5,7 @@ import java.awt.*;
 
 import models.User;
 import utils.AppFont;
+import utils.Session;
 
 public class Dashboard extends JFrame {
 	private CardLayout cardLayout;
@@ -23,6 +24,8 @@ public class Dashboard extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
+		System.out.println("Sesion: " + Session.getRole());
+
 		initializeUI();
 	}
 
@@ -33,7 +36,9 @@ public class Dashboard extends JFrame {
 		btnHome = new JButton("Home");
 		btnUsers = new JButton("See Users");
 		navbar.add(btnHome);
-		navbar.add(btnUsers);
+
+		if(Session.getRole().equals("ADMIN")) { navbar.add(btnUsers); }
+
 		add(navbar, BorderLayout.NORTH);
 
 		cardLayout = new CardLayout();

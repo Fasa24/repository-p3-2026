@@ -33,7 +33,7 @@ public class RegisterController {
         if (errors.isEmpty()) {
             try {
                 repository.save(user);
-                JOptionPane.showMessageDialog(view, "User successfully saved in CSV!");
+                JOptionPane.showMessageDialog(view, "Register successfully");
                 AppNavigator.openLogin(view);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(view, "Error saving: " + ex.getMessage(),

@@ -90,11 +90,13 @@ public class UserFormDialog extends JDialog {
         applyFocusBorder(txtEmail, lblEmailError);
 
         passwordField = new RoundedPasswordField(10);
-        passwordField.setCaretColor(Color.BLACK);
-        addField(main, "Password", passwordField);
         lblPasswordError = addError(main);
 
-        applyFocusBorder(passwordField, lblPasswordError);
+        if(user == null){
+            passwordField.setCaretColor(Color.BLACK);
+            addField(main, "Password", passwordField);
+            applyFocusBorder(passwordField, lblPasswordError);
+        }
 
         textArea = new RoundedTextArea(10);
         textArea.setLineWrap(true);
