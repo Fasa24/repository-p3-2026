@@ -106,7 +106,7 @@ public class User {
 		String[] data = csvLine.split(";");
 
 		if (data.length < 7) {
-			System.err.println("Línea CSV inválida (faltan campos): " + csvLine);
+			System.err.println("Invalid CSV line (missing parts): " + csvLine);
 			return null;
 		}
 

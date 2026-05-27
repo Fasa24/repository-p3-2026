@@ -25,6 +25,4 @@ public class Session {
     public static String getRole( ) {
         return currentUser.getRole();
     }
-
-
 }

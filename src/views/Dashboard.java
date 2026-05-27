@@ -1,86 +1,161 @@
 package views;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
-import models.User;
 import utils.AppFont;
 import utils.Session;
 
 public class Dashboard extends JFrame {
-	private CardLayout cardLayout;
-	private JPanel container;
-	public JMenuItem exit;
-	public JButton btnHome, btnUsers;
-	public UsersView usersPanel;
-	private User user;
+    private CardLayout cardLayout;
+    private JPanel container;
+    
+    public JMenuItem exit;
+    public JButton btnHome, btnCatalog, btnOrders, btnUsers, btnReports;
+    public UsersView usersPanel;
+    public StoreFrontView storeFrontPanel; 
+    
+    public AdminPanelMock catalogPanel;
+    public AdminPanelMock ordersPanel;
+    public AdminPanelMock reportsPanel;
 
-	public static final String HOME_VIEW = "HOME";
-	public static final String USERS_VIEW = "USERS";
+    public static final String HOME_VIEW = "HOME";
+    public static final String CATALOG_VIEW = "CATALOG";
+    public static final String ORDERS_VIEW = "ORDERS";
+    public static final String USERS_VIEW = "USERS";
+    public static final String REPORTS_VIEW = "REPORTS";
 
-	public Dashboard() {
-		setTitle("eManza - Dashboard");
-		setSize(900, 600);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setLocationRelativeTo(null);
+    public Dashboard() {
+        setTitle("eManza - Online Store Dashboard");
+        setSize(1100, 750); 
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-		System.out.println("Sesion: " + Session.getRole());
+        initializeUI();
+    }
 
-		initializeUI();
-	}
+    private void initializeUI() {
+        setLayout(new BorderLayout());
 
-	private void initializeUI() {
-		setLayout(new BorderLayout());
+        // --- CARGA Y CONFIGURACIÓN DEL LOGO ---
+        ImageIcon rawIcon = new ImageIcon("src/resources/img/appleLogo.png");
+        
+        // REQUERIMIENTO 3B: Cambiar el icono pequeño de la barra de título de la ventana
+        if (rawIcon.getImage() != null) {
+            setIconImage(rawIcon.getImage());
+        }
 
-		JPanel navbar = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 10));
-		btnHome = new JButton("Home");
-		btnUsers = new JButton("See Users");
-		navbar.add(btnHome);
+        // --- 1. BARRA DE NAVEGACIÓN SUPERIOR ESTILO AMAZON ---
+        JPanel amazonNavbar = new JPanel(new BorderLayout(15, 0));
+        amazonNavbar.setBackground(new Color(20, 20, 20)); 
+        amazonNavbar.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-		if(Session.getRole().equals("ADMIN")) { navbar.add(btnUsers); }
+        // REQUERIMIENTO 3A: Escalar y agregar el logotipo al lado del texto "eManza"
+        JLabel lblBrand;
+        if (rawIcon.getIconWidth() > 0) {
+            Image scaledLogo = rawIcon.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
+            ImageIcon navIcon = new ImageIcon(scaledLogo);
+            lblBrand = new JLabel("eManza", navIcon, JLabel.LEFT);
+            lblBrand.setIconTextGap(8);
+        } else {
+            lblBrand = new JLabel("🛒 eManza");
+        }
+        
+        lblBrand.setFont(new Font("Dialog", Font.BOLD, 22));
+        lblBrand.setForeground(Color.WHITE);
+        amazonNavbar.add(lblBrand, BorderLayout.WEST);
 
-		add(navbar, BorderLayout.NORTH);
+        // Center: System navegation buttons
+        JPanel systemNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        systemNavPanel.setOpaque(false);
 
-		cardLayout = new CardLayout();
-		container = new JPanel(cardLayout);
+        btnHome = createNavbarButton("StoreFront");
+        btnCatalog = createNavbarButton("Products");
+        btnOrders = createNavbarButton("Orders");
+        btnReports = createNavbarButton("Sales Metrics");
+        btnUsers = createNavbarButton("Users");
 
-		JPanel homePanel = new JPanel(new GridBagLayout());
-		JLabel welcomeLabel = new JLabel("Welcome to the Dashboard!", SwingConstants.CENTER);
-		welcomeLabel.setFont(AppFont.title());
-		homePanel.add(welcomeLabel);
+        systemNavPanel.add(btnHome);
+        systemNavPanel.add(btnCatalog);
+        systemNavPanel.add(btnOrders);
+        systemNavPanel.add(btnReports);
 
-		usersPanel = new UsersView();
+        if (Session.isLoggedIn() && Session.getRole().equals("ADMIN")) {
+            systemNavPanel.add(btnUsers);
+        }
+        amazonNavbar.add(systemNavPanel, BorderLayout.CENTER);
 
-		container.add(homePanel, HOME_VIEW);
-		container.add(usersPanel, USERS_VIEW);
+        add(amazonNavbar, BorderLayout.NORTH);
 
-		add(container, BorderLayout.CENTER);
+        cardLayout = new CardLayout();
+        container = new JPanel(cardLayout);
+        container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		setJMenuBar(createMenuBar());
-	}
+        storeFrontPanel = new StoreFrontView();
+        usersPanel = new UsersView();
+        catalogPanel = new AdminPanelMock("Products Inventory Maintenance");
+        ordersPanel = new AdminPanelMock("Pending Customer Orders");
+        reportsPanel = new AdminPanelMock("Category Performance Reports");
 
-	private JMenuBar createMenuBar() {
-		JMenuBar mb = new JMenuBar();
-		JMenu fileMenu = new JMenu("Session");
-		exit = new JMenuItem("Log out");
-		fileMenu.add(exit);
-		mb.add(fileMenu);
-		return mb;
-	}
+        container.add(storeFrontPanel, HOME_VIEW);
+        container.add(catalogPanel, CATALOG_VIEW);
+        container.add(ordersPanel, ORDERS_VIEW);
+        container.add(usersPanel, USERS_VIEW);
+        container.add(reportsPanel, REPORTS_VIEW);
 
-	/*
-	public void setWindowSize(int width, int height) {
-		setSize(width, height);
-	}
-	 */
+        add(container, BorderLayout.CENTER);
 
-	/*
-	public void setWindowLocation(int x, int y) {
-		setLocation(x, y);
-	}
-	 */
+        setJMenuBar(createMenuBar());
+    }
 
-	public void showView(String viewName) {
-		cardLayout.show(container, viewName);
-	}
+    private JButton createNavbarButton(String text) {
+        JButton btn = new JButton(text);
+        btn.setFont(AppFont.normal());
+        btn.setForeground(Color.WHITE);
+        btn.setBorderPainted(false);
+        btn.setContentAreaFilled(false);
+        btn.setFocusPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setForeground(new Color(0, 255, 0)); 
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setForeground(Color.WHITE);
+            }
+        });
+        return btn;
+    }
+
+    private JMenuBar createMenuBar() {
+        JMenuBar mb = new JMenuBar();
+        JMenu fileMenu = new JMenu("Account");
+        exit = new JMenuItem("Log out");
+        fileMenu.add(exit);
+        mb.add(fileMenu);
+        return mb;
+    }
+
+    public void showView(String viewName) {
+        cardLayout.show(container, viewName);
+    }
+
+    public static class AdminPanelMock extends JPanel {
+        private javax.swing.table.DefaultTableModel internalModel;
+        private JTable internalTable;
+
+        public AdminPanelMock(String title) {
+            setLayout(new BorderLayout(10, 10));
+            JLabel lbl = new JLabel(title);
+            lbl.setFont(AppFont.title());
+            add(lbl, BorderLayout.NORTH);
+
+            internalModel = new javax.swing.table.DefaultTableModel(new String[]{"Data Field 1", "Data Field 2", "Data Field 3", "Data Field 4"}, 0);
+            internalTable = new JTable(internalModel);
+            add(new JScrollPane(internalTable), BorderLayout.CENTER);
+        }
+        public void clearData() { internalModel.setRowCount(0); }
+        public void addRow(Object[] row) { internalModel.addRow(row); }
+    }
 }

@@ -44,7 +44,7 @@ public class Config {
 
     public static void save() {
         try (FileOutputStream fos = new FileOutputStream(FILE)) {
-            properties.store(fos, "Configuracion");
+            properties.store(fos, "Settings");
         }catch(IOException ex) {
             ex.printStackTrace();
         }

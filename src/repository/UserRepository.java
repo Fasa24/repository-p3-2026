@@ -122,9 +122,6 @@ public class UserRepository {
     }
 
     public boolean update(int index, User updatedUser) throws IOException {
-        //List<User> users = getUsers();
-        //users.set(index, updatedUser);
-
         String sql = "UPDATE Users SET username = ?, email = ?, passphrase = ?,"
                 + " address = ?, postal_code = ?, gender = ?, user_role = ? "
                 + "WHERE user_id = ?";

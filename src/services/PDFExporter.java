@@ -38,7 +38,6 @@ public class PDFExporter {
 
             int i = 0;
             for (User u : users) {
-                //table.addCell(String.valueOf(i++));
                 table.addCell(u.getName());
                 table.addCell(u.getEmail());
                 table.addCell(u.getAddress());

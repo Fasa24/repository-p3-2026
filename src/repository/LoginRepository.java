@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import config.DatabaseConnection;
 import models.User;
 import utils.PasswordUtils;
@@ -14,8 +12,7 @@ public class LoginRepository {
 
     public User login(String email, String passhphrase) {
 
-		String sql = "SELECT user_id, email, passphrase, user_role, username FROM Users " +
-                "WHERE email = ?";
+        String sql = "SELECT user_id, email, passphrase, user_role, username FROM Users WHERE email = ?";
 
         try (
                 Connection conn = DatabaseConnection.getConnection();
@@ -23,13 +20,27 @@ public class LoginRepository {
         ){
 
             stmt.setString(1, email);
-            //stmt.setString(2, passhphrase);
             ResultSet rs = stmt.executeQuery();
 
             if(rs.next()) {
                 String hashedPassword = rs.getString("passphrase");
+                boolean passwordMatches = false;
 
-                if(!PasswordUtils.checkPassword(passhphrase, hashedPassword)) { return null; }
+                if (passhphrase.equals(hashedPassword)) {
+                    passwordMatches = true;
+                } else {
+                    try {
+                        if (PasswordUtils.checkPassword(passhphrase, hashedPassword)) {
+                            passwordMatches = true;
+                        }
+                    } catch (IllegalArgumentException ex) {
+                        System.out.println("Note: The password format in the DB does not require BCrypt for: " + email);
+                    }
+                }
+
+                if (!passwordMatches) { 
+                    return null; 
+                }
 
                 User user = new User();
                 user.setId(rs.getInt("user_id"));
@@ -40,11 +51,10 @@ public class LoginRepository {
                 return user;
             }
 
-        }catch(SQLException ex) {
+        } catch(SQLException ex) {
             ex.printStackTrace();
         }
 
         return null;
     }
-
 }

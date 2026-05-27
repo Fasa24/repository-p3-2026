@@ -62,7 +62,7 @@ public class LoginController {
 		String passwordError = model.validatePassword(password);
 
 		if (email.trim().isEmpty()) {
-			view.setEmailError("email is required");
+			view.setEmailError("Email is required");
 			valid = false;
 		} else if (emailError != null) {
 			view.setEmailError(emailError);
@@ -97,28 +97,8 @@ public class LoginController {
 
 		Session.login(user);
 
-		/*
-		JOptionPane.showMessageDialog(
-				view.getWindow(),
-				"Se inició la sesión",
-				"Sesión iniciada",
-				JOptionPane.INFORMATION_MESSAGE
-		);
-		 */
-
-		/*
-		if(Session.getRole().equals("ADMIN")) {
-			new DashboardController(new Dashboard());
-
-		}else {
-			JOptionPane.showMessageDialog(view.getWindow(), "No tienes permisos");
-		}
-		 */
-
 		new DashboardController(new Dashboard());
 		view.getWindow().dispose();
-
-		//AppNavigator.openDashboard(view.getWindow());
 	}
 
 	private void handleRegistration() {
