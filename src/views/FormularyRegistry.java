@@ -37,6 +37,8 @@ public class FormularyRegistry extends JFrame {
 	public FormularyRegistry() {
 		setSize(400, 700);
 		setTitle("eManza - Create Account");
+		ImageIcon icon = new ImageIcon("src/resources/img/appleLogo.png");
+		setIconImage(icon.getImage());
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

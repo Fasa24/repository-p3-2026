@@ -27,6 +27,7 @@ public class Dashboard extends JFrame {
 
     public Dashboard() {
         setTitle("eManza - Online Store Dashboard");
+        setResizable(false);
         setSize(1100, 750); 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);

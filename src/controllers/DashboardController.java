@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import models.Product;
 import repository.UserRepository;
 import repository.ProductRepository;
+import utils.Session;
 import views.Dashboard;
 import views.LoginWindow;
 import views.CartDialog;
@@ -126,7 +127,7 @@ public class DashboardController {
         });
 
         dialog.btnCheckout.addActionListener(e -> {
-            int simulatedLoggedUserId = 1; 
+            int simulatedLoggedUserId = Session.getCurrentUser().getId();
 
             boolean success = productRepository.createOrder(simulatedLoggedUserId, shoppingCart);
             if (success) {

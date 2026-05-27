@@ -11,10 +11,31 @@ public class ProductRepository {
 
     public List<Product> getCatalog() {
         List<Product> list = new ArrayList<>();
-        String sql = "SELECT product_name, category_name, price, stock, rating, reviews_count FROM product_catalog_view";
+
+        String sql = """
+        SELECT 
+            pcv.product_name,
+            pcv.category_name,
+            pcv.price,
+            pcv.stock,
+            pcv.rating,
+            COUNT(r.product_id) AS reviews_count
+        FROM product_catalog_view pcv
+        LEFT JOIN Reviews r 
+            ON pcv.product_id = r.product_id
+        GROUP BY 
+            pcv.product_id,
+            pcv.product_name,
+            pcv.category_name,
+            pcv.price,
+            pcv.stock,
+            pcv.rating
+        """;
+
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
                 list.add(new Product(
                         rs.getString("product_name"),
@@ -25,9 +46,11 @@ public class ProductRepository {
                         rs.getInt("reviews_count")
                 ));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return list;
     }
 
