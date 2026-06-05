@@ -95,32 +95,6 @@ public class User {
 	public String getRole() { return role; }
 	public boolean isTermsAccepted() { return termsAccepted; }
 
-	public String toCsv() {
-		return name + ";" + email + ";" + password + ";" +
-				address + ";" + postalCode + ";" + gender + ";" + termsAccepted;
-	}
-
-	public static User fromCsv(String csvLine) {
-		if (csvLine == null || csvLine.isBlank()) return null;
-
-		String[] data = csvLine.split(";");
-
-		if (data.length < 7) {
-			System.err.println("Invalid CSV line (missing parts): " + csvLine);
-			return null;
-		}
-
-		return new User(
-				data[0], // name
-				data[1], // email
-				data[2], // password
-				data[3], // address
-				data[4], // postalCode
-				data[5], // gender
-				Boolean.parseBoolean(data[6]) // termsAccepted
-		);
-	}
-
 	@Override
 	public String toString() {
 		return "Name: " + name + " (" + email + ")\n" +

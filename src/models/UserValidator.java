@@ -10,8 +10,11 @@ public class UserValidator {
         if (user.getName().trim().isEmpty())
             errors.put("name", "Name is required.");
 
-        if (user.getEmail().trim().isEmpty())
+        if (user.getEmail().trim().isEmpty()) {
             errors.put("email", "E-mail is required.");
+        } else if (!user.getEmail().contains("@")) {
+            errors.put("email", "E-mail must contain @.");
+        }
 
         if (user.getPassword().trim().isEmpty())
             errors.put("password", "Password is required.");

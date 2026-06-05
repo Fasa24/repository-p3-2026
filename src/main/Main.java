@@ -17,6 +17,7 @@ public class Main {
 		showOnScreen(0, loginWindow);
 	}
 
+
 	public static void showOnScreen(int screen, JFrame frame) {
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		GraphicsDevice[] gd = ge.getScreenDevices();

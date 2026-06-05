@@ -119,7 +119,7 @@ public class DashboardController {
 
     private void openCartCheckout() {
         CartDialog dialog = new CartDialog(view, shoppingCart);
-        
+
         dialog.btnClear.addActionListener(e -> {
             shoppingCart.clear();
             dialog.dispose();
@@ -127,25 +127,27 @@ public class DashboardController {
         });
 
         dialog.btnCheckout.addActionListener(e -> {
-            int simulatedLoggedUserId = Session.getCurrentUser().getId();
+            dialog.triggerPaymentFlow(() -> {
+                int userId = Session.getCurrentUser().getId();
+                boolean success = productRepository.createOrder(userId, shoppingCart);
 
-            boolean success = productRepository.createOrder(simulatedLoggedUserId, shoppingCart);
-            if (success) {
-                JOptionPane.showMessageDialog(dialog, 
-                    "Order placed successfully!\nYour transaction has been written into MySQL and inventory was reduced.", 
-                    "Success", JOptionPane.INFORMATION_MESSAGE);
-                shoppingCart.clear();
-                dialog.dispose();
-                refreshStoreFrontProducts();
-            } else {
-                JOptionPane.showMessageDialog(dialog, "Transaction error. Database rollback executed.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+                if (success) {
+                    shoppingCart.clear();
+                    refreshStoreFrontProducts();
+                    dialog.showSuccessAndClose(); // Muestra confirmación  cierra
+                } else {
+                    JOptionPane.showMessageDialog(dialog,
+                            "Transaction error. Database rollback executed.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            });
         });
 
         dialog.setVisible(true);
     }
 
     private void loadCatalogData() {
+        view.catalogPanel.setColumns("Product", "Category", "Price", "Stock");
         view.catalogPanel.clearData();
         List<Product> products = productRepository.getCatalog();
         for (Product p : products) {
@@ -154,6 +156,7 @@ public class DashboardController {
     }
 
     private void loadOrdersData() {
+        view.ordersPanel.setColumns("ID", "Name", "Address", "Total");
         view.ordersPanel.clearData();
         List<Object[]> orders = productRepository.getPendingOrders();
         for (Object[] row : orders) {
@@ -162,6 +165,7 @@ public class DashboardController {
     }
 
     private void loadReportsData() {
+        view.reportsPanel.setColumns("Category", "amount", "Total", "");
         view.reportsPanel.clearData();
         List<Object[]> reportRows = productRepository.getSalesReport();
         for (Object[] row : reportRows) {

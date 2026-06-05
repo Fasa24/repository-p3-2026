@@ -38,20 +38,16 @@ public class Dashboard extends JFrame {
     private void initializeUI() {
         setLayout(new BorderLayout());
 
-        // --- CARGA Y CONFIGURACIÓN DEL LOGO ---
         ImageIcon rawIcon = new ImageIcon("src/resources/img/appleLogo.png");
-        
-        // REQUERIMIENTO 3B: Cambiar el icono pequeño de la barra de título de la ventana
+
         if (rawIcon.getImage() != null) {
             setIconImage(rawIcon.getImage());
         }
 
-        // --- 1. BARRA DE NAVEGACIÓN SUPERIOR ESTILO AMAZON ---
         JPanel amazonNavbar = new JPanel(new BorderLayout(15, 0));
         amazonNavbar.setBackground(new Color(20, 20, 20)); 
         amazonNavbar.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-        // REQUERIMIENTO 3A: Escalar y agregar el logotipo al lado del texto "eManza"
         JLabel lblBrand;
         if (rawIcon.getIconWidth() > 0) {
             Image scaledLogo = rawIcon.getImage().getScaledInstance(26, 26, Image.SCALE_SMOOTH);
@@ -66,7 +62,6 @@ public class Dashboard extends JFrame {
         lblBrand.setForeground(Color.WHITE);
         amazonNavbar.add(lblBrand, BorderLayout.WEST);
 
-        // Center: System navegation buttons
         JPanel systemNavPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         systemNavPanel.setOpaque(false);
 
@@ -78,10 +73,11 @@ public class Dashboard extends JFrame {
 
         systemNavPanel.add(btnHome);
         systemNavPanel.add(btnCatalog);
-        systemNavPanel.add(btnOrders);
-        systemNavPanel.add(btnReports);
+
 
         if (Session.isLoggedIn() && Session.getRole().equals("ADMIN")) {
+            systemNavPanel.add(btnOrders);
+            systemNavPanel.add(btnReports);
             systemNavPanel.add(btnUsers);
         }
         amazonNavbar.add(systemNavPanel, BorderLayout.CENTER);
@@ -156,7 +152,15 @@ public class Dashboard extends JFrame {
             internalTable = new JTable(internalModel);
             add(new JScrollPane(internalTable), BorderLayout.CENTER);
         }
+
+        public void setColumns(String... columnNames) {
+            internalModel = new javax.swing.table.DefaultTableModel(columnNames, 0);
+            internalTable.setModel(internalModel);
+        }
+
         public void clearData() { internalModel.setRowCount(0); }
         public void addRow(Object[] row) { internalModel.addRow(row); }
     }
+
+
 }
