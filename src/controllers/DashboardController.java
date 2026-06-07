@@ -165,7 +165,7 @@ public class DashboardController {
     }
 
     private void loadReportsData() {
-        view.reportsPanel.setColumns("Category", "amount", "Total", "");
+        view.reportsPanel.setColumns("Category", "Amount", "Total", "");
         view.reportsPanel.clearData();
         List<Object[]> reportRows = productRepository.getSalesReport();
         for (Object[] row : reportRows) {
